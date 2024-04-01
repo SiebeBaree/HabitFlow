@@ -3,7 +3,7 @@ import { env } from "@/env";
 
 const resend = new Resend(env.RESEND_API_KEY);
 
-const FROM_EMAIL = "onboarding@resend.dev";
+const FROM_EMAIL = "mail@habitflow.pro";
 
 export async function sendVerificationEmail(email: string, token: string) {
     const confirmLink = `${env.DOMAIN_PREFIX}${env.VERCEL_URL}/verify-email?token=${token}`;
