@@ -1,13 +1,7 @@
-import {
-    type NeonQueryFunction,
-    neon,
-    neonConfig,
-} from "@neondatabase/serverless";
+import { type NeonQueryFunction, neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import { env } from "@/env";
 import * as schema from "./schema";
-
-neonConfig.fetchConnectionCache = true;
 
 const globalForDb = globalThis as unknown as {
     conn: NeonQueryFunction<false, false> | undefined;
