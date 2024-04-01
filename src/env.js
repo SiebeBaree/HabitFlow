@@ -21,6 +21,8 @@ export const env = createEnv({
         RESEND_API_KEY: z.string(),
         DOMAIN_PREFIX: z.string().optional().default("https://"),
         VERCEL_URL: z.string(),
+        REDIS_URL: z.string(),
+        REDIS_TOKEN: z.string(),
     },
     client: {},
     runtimeEnv: {
@@ -34,6 +36,8 @@ export const env = createEnv({
         RESEND_API_KEY: process.env.RESEND_API_KEY,
         DOMAIN_PREFIX: process.env.DOMAIN_PREFIX,
         VERCEL_URL: process.env.VERCEL_URL,
+        REDIS_URL: process.env.REDIS_URL,
+        REDIS_TOKEN: process.env.REDIS_TOKEN,
     },
     skipValidation: !!process.env.SKIP_ENV_VALIDATION,
     emptyStringAsUndefined: true,
