@@ -1,0 +1,9 @@
+.edge {
+    right: -160px;
+}
+
+@media screen and (min-width: 1800px) {
+    .edge {
+        right: 0;
+    }
+}

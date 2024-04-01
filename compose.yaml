@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+    redis:
+        image: redis:alpine
+        restart: on-failure
+        ports:
+            - "7721:6379"
+    postgres:
+        image: postgres:alpine
+        restart: on-failure
+        ports:
+            - "7722:5432"
+        environment:
+            POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+            POSTGRES_USER: admin
+            POSTGRES_DB: habitflow
+        secrets:
+            - db_password
+        volumes:
+            - postgres_db:/var/lib/postgresql/data
+secrets:
+    db_password:
+        file: postgres_password.txt
+volumes:
+    postgres_db:
