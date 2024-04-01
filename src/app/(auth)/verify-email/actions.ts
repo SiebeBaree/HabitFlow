@@ -7,7 +7,6 @@ import { users, verificationToken } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function newVerification(token: string) {
-    console.log("newVerification", token);
     const existingToken = await getVerificationTokenByToken(token);
     if (!existingToken) {
         return { success: false, error: "Token does not exist." };
