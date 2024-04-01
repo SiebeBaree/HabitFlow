@@ -33,7 +33,8 @@ export const {
         newUser: "/register",
     },
     events: {
-        async linkAccount({ user }) {
+        async linkAccount({ user, account }) {
+            if (account?.provider === "credentials") return;
             await db
                 .update(users)
                 .set({ emailVerified: new Date() })

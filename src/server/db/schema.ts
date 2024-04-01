@@ -1,4 +1,4 @@
-import { relations, sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import {
     index,
     integer,
@@ -24,7 +24,7 @@ export const users = createTable("user", {
     password: text("password"),
     emailVerified: timestamp("emailVerified", {
         mode: "date",
-    }).default(sql`CURRENT_TIMESTAMP`),
+    }),
     image: varchar("image", { length: 255 }),
     role: roleEnum("role").default("user"),
 });
