@@ -1,10 +1,13 @@
 import "@/styles/globals.css";
 
-import localFont from "next/font/local";
+import { Gabarito } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
 
-const Gabarito = localFont({ src: "../fonts/Gabarito.ttf" });
+const gabarito = Gabarito({
+    subsets: ["latin"],
+    weight: ["400", "500", "600", "700"],
+});
 
 export const metadata = {
     title: "HabitFlow",
@@ -20,7 +23,7 @@ export default function RootLayout({
             <body
                 className={cn(
                     "min-h-screen bg-background font-sans antialiased",
-                    Gabarito.className,
+                    gabarito.className,
                 )}
             >
                 <Toaster richColors />

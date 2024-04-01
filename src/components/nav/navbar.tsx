@@ -16,22 +16,23 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { auth } from "@/server/auth";
 import { logout } from "@/actions/logout";
+import NavItem from "./nav-item";
 
 export default async function Navbar() {
     const session = await auth();
 
     return (
         <nav className="container flex h-20 items-center justify-between py-4">
-            <div className="flex items-center gap-10 xl:gap-16">
+            <div className="flex items-center gap-4 xl:gap-10">
                 <div>
                     <h1 className="text-2xl font-bold">HabitFlow</h1>
                 </div>
-                <ul className="flex items-center gap-8">
+                <ul className="flex items-center gap-2">
                     <li>
-                        <Link href="#pricing">Pricing</Link>
+                        <NavItem name="Pricing" href="#pricing" />
                     </li>
                     <li>
-                        <Link href="#faq">FAQ</Link>
+                        <NavItem name="FAQ" href="#faq" />
                     </li>
                 </ul>
             </div>
@@ -75,7 +76,7 @@ export default async function Navbar() {
                     </DropdownMenuContent>
                 </DropdownMenu>
             ) : (
-                <Link href="/login">Login</Link>
+                <NavItem name="Login" href="/login" />
             )}
         </nav>
     );
