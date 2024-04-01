@@ -8,6 +8,10 @@ import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/server/mail";
+import { headers } from "next/headers";
+import { createRateLimit } from "@/server/data/ratelimit";
+
+const ratelimit = createRateLimit(3, "20m");
 
 export async function register(values: z.infer<typeof registerSchema>) {
     const validatedFields = registerSchema.safeParse(values);
@@ -15,6 +19,22 @@ export async function register(values: z.infer<typeof registerSchema>) {
         return {
             success: false,
             error: "Invalid fields",
+        };
+    }
+
+    const ip = headers().get("x-forwarded-for") ?? headers().get("x-real-ip");
+    if (!ip) {
+        return {
+            success: false,
+            error: "Invalid IP",
+        };
+    }
+
+    const { remaining, limit, success } = await ratelimit.limit(ip);
+    if (!success) {
+        return {
+            success: false,
+            error: "You created too many accounts! Please try again later.",
         };
     }
 
@@ -50,6 +70,8 @@ export async function register(values: z.infer<typeof registerSchema>) {
 
     return {
         success: true,
+        limit: limit,
+        remaining: remaining,
         message: "Confirmation email sent!",
     };
 }

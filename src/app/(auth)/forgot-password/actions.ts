@@ -5,6 +5,10 @@ import { forgotPasswordSchema } from "./schema";
 import { getUserByEmail } from "@/server/data/user";
 import { sendPasswordResetEmail } from "@/server/mail";
 import { generatePasswordResetToken } from "@/lib/tokens";
+import { headers } from "next/headers";
+import { createRateLimit } from "@/server/data/ratelimit";
+
+const ratelimit = createRateLimit(2, "45m");
 
 export async function forgot(values: z.infer<typeof forgotPasswordSchema>) {
     const validatedFields = forgotPasswordSchema.safeParse(values);
@@ -25,11 +29,29 @@ export async function forgot(values: z.infer<typeof forgotPasswordSchema>) {
         };
     }
 
+    const ip = headers().get("x-forwarded-for") ?? headers().get("x-real-ip");
+    if (!ip) {
+        return {
+            success: false,
+            error: "Invalid IP",
+        };
+    }
+
+    const { remaining, limit, success } = await ratelimit.limit(ip);
+    if (!success) {
+        return {
+            success: false,
+            error: "You have reached the limit for password resets. Please try again later.",
+        };
+    }
+
     const passwordResetToken = await generatePasswordResetToken(email);
     await sendPasswordResetEmail(email, passwordResetToken.token);
 
     return {
         success: true,
+        limit: limit,
+        remaining: remaining,
         message: "Reset email sent!",
     };
 }
