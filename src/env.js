@@ -19,7 +19,7 @@ export const env = createEnv({
         AUTH_GOOGLE_ID: z.string(),
         AUTH_GOOGLE_SECRET: z.string(),
         RESEND_API_KEY: z.string(),
-        VERCEL_URL: z.string().url(),
+        VERCEL_URL: z.string(),
     },
     client: {},
     runtimeEnv: {
