@@ -7,7 +7,7 @@ import { users } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/lib/mail";
+import { sendVerificationEmail } from "@/server/mail";
 
 export async function register(values: z.infer<typeof registerSchema>) {
     const validatedFields = registerSchema.safeParse(values);

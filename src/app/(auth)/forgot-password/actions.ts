@@ -3,7 +3,7 @@
 import type { z } from "zod";
 import { forgotPasswordSchema } from "./schema";
 import { getUserByEmail } from "@/server/data/user";
-import { sendPasswordResetEmail } from "@/lib/mail";
+import { sendPasswordResetEmail } from "@/server/mail";
 import { generatePasswordResetToken } from "@/lib/tokens";
 
 export async function forgot(values: z.infer<typeof forgotPasswordSchema>) {

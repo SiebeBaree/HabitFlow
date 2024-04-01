@@ -6,7 +6,7 @@ import { signIn } from "@/server/auth";
 import { AuthError } from "@auth/core/errors";
 import { getUserByEmail } from "@/server/data/user";
 import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/lib/mail";
+import { sendVerificationEmail } from "@/server/mail";
 
 export async function login(
     values: z.infer<typeof loginSchema>,
