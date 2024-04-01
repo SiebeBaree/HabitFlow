@@ -1,6 +1,6 @@
 import { StarIcon } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import PageTitle from "./page-title";
+import PageTitle from "@/components/home/page-title";
 
 type Testimonial = {
     text: string[];

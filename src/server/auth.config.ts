@@ -7,7 +7,7 @@ import { env } from "@/env";
 import type { NextAuthConfig } from "next-auth";
 
 import { loginSchema } from "@/app/(auth)/login/schema";
-import { getUserByEmail } from "./data/user";
+import { getUserByEmail } from "@/server/data/user";
 import bcrypt from "bcryptjs";
 
 export default {
