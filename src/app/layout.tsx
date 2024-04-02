@@ -2,9 +2,10 @@ import "@/styles/globals.css";
 
 import { Gabarito } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "sonner";
 import type { Metadata, Viewport } from "next";
 import { env } from "@/env";
+import Providers from "@/components/providers";
 
 const gabarito = Gabarito({
     subsets: ["latin"],
@@ -102,7 +103,7 @@ export default function RootLayout({
                 )}
             >
                 <Toaster richColors />
-                {children}
+                <Providers>{children}</Providers>
             </body>
         </html>
     );
