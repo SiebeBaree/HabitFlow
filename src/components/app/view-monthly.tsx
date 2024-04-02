@@ -51,6 +51,23 @@ export default function ViewMonthly({ userId }: { userId: string }) {
     const [initialHabits, setInitialHabits] = useState<number>(-1);
     const habitStore = useHabitStore();
 
+    function getDayOfWeek(day: number): string {
+        const newDate = new Date(
+            Date.UTC(date.getFullYear(), date.getMonth(), day),
+        );
+        const daysOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
+        return daysOfWeek[newDate.getDay()] ?? "";
+    }
+
+    function isToday(day: number): boolean {
+        const today = new Date();
+        return (
+            today.getFullYear() === date.getFullYear() &&
+            today.getMonth() === date.getMonth() &&
+            today.getDate() === day
+        );
+    }
+
     const columns = [
         columnHelper.accessor("habitName", {
             id: "habits",
@@ -104,7 +121,17 @@ export default function ViewMonthly({ userId }: { userId: string }) {
             columnHelper.accessor(`day-${i + 1}`, {
                 id: `day-${i + 1}`,
                 header: () => (
-                    <div className="max-w-8 text-center">{i + 1}</div>
+                    <div
+                        className={cn(
+                            "flex h-full max-w-8 flex-col justify-between text-center",
+                            isToday(i) && "bg-primary text-primary-foreground",
+                        )}
+                    >
+                        <p className="mb-1 text-xs font-light">
+                            {getDayOfWeek(i)}
+                        </p>
+                        <p>{i + 1}</p>
+                    </div>
                 ),
                 cell: (props) => (
                     <div className="h-8 w-8">
