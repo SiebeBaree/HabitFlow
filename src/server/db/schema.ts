@@ -10,6 +10,7 @@ import {
     pgEnum,
     serial,
     uuid,
+    date,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
@@ -127,7 +128,7 @@ export const passwordResetToken = createTable(
 export const habits = createTable("habit", {
     id: serial("id").primaryKey(),
     name: varchar("name", { length: 255 }).notNull(),
-    userId: integer("userId")
+    userId: uuid("userId")
         .notNull()
         .references(() => users.id),
     sortOrder: integer("sort_order").notNull().default(0),
@@ -143,7 +144,7 @@ export const dailyTracking = createTable("daily_tracking", {
     habitId: integer("habitId")
         .notNull()
         .references(() => habits.id),
-    date: timestamp("date", { mode: "date" }).notNull(),
+    date: date("date").notNull(),
     completed: integer("completed").notNull().default(0),
     time_spent: integer("time_spent"),
 });
@@ -172,7 +173,7 @@ export const trackingNotesRelations = relations(trackingNotes, ({ one }) => ({
 
 export const generalNotes = createTable("general_note", {
     id: serial("id").primaryKey(),
-    userId: integer("userId")
+    userId: uuid("userId")
         .notNull()
         .references(() => users.id),
     note: text("note"),
