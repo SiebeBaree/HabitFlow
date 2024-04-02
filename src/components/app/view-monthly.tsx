@@ -36,14 +36,15 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { deleteHabit } from "@/actions/delete-habit";
+import MonthSelector from "./month-selector";
 
 const columnHelper = createColumnHelper<MonthlyViewData>();
 
 export default function ViewMonthly({ userId }: { userId: string }) {
-    const [date] = useState<Date>(new Date());
+    const [date, setDate] = useState<Date>(new Date());
     const {
         data: queryData,
-        isPending,
+        isLoading,
         refetch,
     } = useMonthlyViewQuery(userId, date);
     const [data, setData] = useState<MonthlyViewData[]>(queryData ?? []);
@@ -153,68 +154,73 @@ export default function ViewMonthly({ userId }: { userId: string }) {
 
     return (
         <>
-            {isPending ? (
+            {isLoading && initialHabits === -1 ? (
                 <Skeleton className="flex h-96 w-full" />
             ) : (
-                <Table className="border-collapse border">
-                    <TableHeader>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => (
-                                    <TableHead
-                                        key={header.id}
-                                        className={cn(
-                                            table.getRowModel().rows?.length
-                                                ? "w-full px-0"
-                                                : "px-2",
-                                        )}
-                                    >
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
-                                                  header.getContext(),
-                                              )}
-                                    </TableHead>
-                                ))}
-                            </TableRow>
-                        ))}
-                    </TableHeader>
-                    <TableBody>
-                        {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
-                                <TableRow
-                                    key={row.id}
-                                    data-state={
-                                        row.getIsSelected() && "selected"
-                                    }
-                                >
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell
-                                            key={cell.id}
-                                            className="border p-0"
-                                        >
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext(),
+                <>
+                    <div className="mb-4">
+                        <MonthSelector date={date} setDate={setDate} />
+                    </div>
+                    <Table className="border-collapse border">
+                        <TableHeader>
+                            {table.getHeaderGroups().map((headerGroup) => (
+                                <TableRow key={headerGroup.id}>
+                                    {headerGroup.headers.map((header) => (
+                                        <TableHead
+                                            key={header.id}
+                                            className={cn(
+                                                table.getRowModel().rows?.length
+                                                    ? "w-full px-0"
+                                                    : "px-2",
                                             )}
-                                        </TableCell>
+                                        >
+                                            {header.isPlaceholder
+                                                ? null
+                                                : flexRender(
+                                                      header.column.columnDef
+                                                          .header,
+                                                      header.getContext(),
+                                                  )}
+                                        </TableHead>
                                     ))}
                                 </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell
-                                    colSpan={columns.length}
-                                    className="h-24 text-center"
-                                >
-                                    No results.
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
+                            ))}
+                        </TableHeader>
+                        <TableBody>
+                            {table.getRowModel().rows?.length ? (
+                                table.getRowModel().rows.map((row) => (
+                                    <TableRow
+                                        key={row.id}
+                                        data-state={
+                                            row.getIsSelected() && "selected"
+                                        }
+                                    >
+                                        {row.getVisibleCells().map((cell) => (
+                                            <TableCell
+                                                key={cell.id}
+                                                className="border p-0"
+                                            >
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext(),
+                                                )}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                ))
+                            ) : (
+                                <TableRow>
+                                    <TableCell
+                                        colSpan={columns.length}
+                                        className="h-24 text-center"
+                                    >
+                                        No results.
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </>
             )}
         </>
     );
