@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 
 import { Gabarito } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { Toaster } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata, Viewport } from "next";
 import { env } from "@/env";
 
