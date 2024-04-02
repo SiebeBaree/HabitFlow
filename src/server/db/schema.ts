@@ -6,10 +6,10 @@ import {
     primaryKey,
     text,
     timestamp,
-    uuid,
     varchar,
     pgEnum,
-    unique,
+    serial,
+    uuid,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
@@ -31,6 +31,7 @@ export const users = createTable("user", {
 
 export const usersRelations = relations(users, ({ many }) => ({
     accounts: many(accounts),
+    habits: many(habits),
 }));
 
 export const accounts = createTable(
@@ -90,16 +91,12 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
 export const verificationToken = createTable(
     "verification_token",
     {
-        id: uuid("id").defaultRandom().notNull().primaryKey(),
-        email: varchar("email", { length: 255 }).notNull(),
+        id: serial("id").primaryKey(),
+        email: varchar("email", { length: 255 }).notNull().unique(),
         token: varchar("token", { length: 255 }).notNull().unique(),
         expires: timestamp("expires", { mode: "date" }).notNull(),
     },
     (verificationToken) => ({
-        unique: unique("verification_token_email_token_idx").on(
-            verificationToken.email,
-            verificationToken.token,
-        ),
         tokenIdx: index("verification_token_token_idx").on(
             verificationToken.token,
         ),
@@ -112,16 +109,12 @@ export const verificationToken = createTable(
 export const passwordResetToken = createTable(
     "password_reset_token",
     {
-        id: uuid("id").defaultRandom().notNull().primaryKey(),
-        email: varchar("email", { length: 255 }).notNull(),
+        id: serial("id").primaryKey(),
+        email: varchar("email", { length: 255 }).notNull().unique(),
         token: varchar("token", { length: 255 }).notNull().unique(),
         expires: timestamp("expires", { mode: "date" }).notNull(),
     },
     (passwordResetToken) => ({
-        unique: unique("password_reset_token_email_token_idx").on(
-            passwordResetToken.email,
-            passwordResetToken.token,
-        ),
         tokenIdx: index("password_reset_token_token_idx").on(
             passwordResetToken.token,
         ),
@@ -130,3 +123,58 @@ export const passwordResetToken = createTable(
         ),
     }),
 );
+
+export const habits = createTable("habit", {
+    id: serial("id").primaryKey(),
+    name: varchar("name", { length: 255 }).notNull(),
+    userId: integer("userId")
+        .notNull()
+        .references(() => users.id),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+});
+
+export const habitRelations = relations(habits, ({ one }) => ({
+    user: one(users, { fields: [habits.userId], references: [users.id] }),
+}));
+
+export const dailyTracking = createTable("daily_tracking", {
+    id: serial("id").primaryKey(),
+    habitId: integer("habitId")
+        .notNull()
+        .references(() => habits.id),
+    date: timestamp("date", { mode: "date" }).notNull(),
+    completed: integer("completed").notNull().default(0),
+    time_spent: integer("time_spent"),
+});
+
+export const dailyTrackingRelations = relations(dailyTracking, ({ one }) => ({
+    habit: one(habits, {
+        fields: [dailyTracking.habitId],
+        references: [habits.id],
+    }),
+}));
+
+export const trackingNotes = createTable("tracking_note", {
+    id: serial("id").primaryKey(),
+    dailyTrackingId: integer("dailyTrackingId")
+        .notNull()
+        .references(() => dailyTracking.id),
+    note: text("note"),
+});
+
+export const trackingNotesRelations = relations(trackingNotes, ({ one }) => ({
+    dailyTracking: one(dailyTracking, {
+        fields: [trackingNotes.dailyTrackingId],
+        references: [dailyTracking.id],
+    }),
+}));
+
+export const generalNotes = createTable("general_note", {
+    id: serial("id").primaryKey(),
+    userId: integer("userId")
+        .notNull()
+        .references(() => users.id),
+    note: text("note"),
+    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+});
