@@ -9,3 +9,14 @@ export const passwordSchema = z
         message:
             "Password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number.",
     });
+
+export const createHabitSchema = z.object({
+    name: z
+        .string()
+        .min(1, {
+            message: "Habit name must be at least 1 character long.",
+        })
+        .max(255, {
+            message: "Habit name must be at most 255 characters long.",
+        }),
+});
