@@ -11,6 +11,11 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { useEffect, useState, useTransition } from "react";
+import { CheckIcon, Trash2Icon } from "lucide-react";
+import { updateHabit } from "@/actions/update-habit";
+import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useHabitStore } from "@/stores/habits";
 import {
     Table,
     TableBody,
@@ -19,11 +24,18 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { CheckIcon } from "lucide-react";
-import { updateHabit } from "@/actions/update-habit";
-import { toast } from "sonner";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useHabitStore } from "@/stores/habits";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { deleteHabit } from "@/actions/delete-habit";
 
 const columnHelper = createColumnHelper<MonthlyViewData>();
 
@@ -43,7 +55,48 @@ export default function ViewMonthly({ userId }: { userId: string }) {
             id: "habits",
             header: () => <div className="w-36 px-2">Habit</div>,
             cell: (props) => (
-                <div className="p-2 text-left">{props.getValue()}</div>
+                <div className="group relative p-2 text-left">
+                    {props.getValue()}
+                    <AlertDialog>
+                        <AlertDialogTrigger className="invisible absolute right-2 top-1/2 -translate-y-1/2 rounded-md bg-background p-1 text-red-500 transition-colors duration-300 hover:bg-red-500 hover:text-white group-hover:visible">
+                            <Trash2Icon size={16} />
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                    Are you absolutely sure?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. This will
+                                    permanently delete your account and remove
+                                    your data from our servers.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction
+                                    onClick={async () => {
+                                        const data = await deleteHabit(
+                                            props.row.original.habitId,
+                                        );
+                                        if (data.success) {
+                                            habitStore.removeHabit(
+                                                props.getValue(),
+                                            );
+                                        } else {
+                                            toast.error(
+                                                data.error ??
+                                                    "Failed to delete habit.",
+                                            );
+                                        }
+                                    }}
+                                >
+                                    Delete Habit
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </div>
             ),
         }),
         ...Array.from({ length: getDaysInMonth(date) }).map((_, i) =>
