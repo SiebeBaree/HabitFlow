@@ -15,6 +15,15 @@ declare module "@auth/core" {
     }
 }
 
+declare module "next-auth" {
+    interface Session extends DefaultSession {
+        user: {
+            id: string;
+            role: "user" | "admin";
+        } & DefaultSession["user"];
+    }
+}
+
 declare module "@auth/core/jwt" {
     interface JWT {
         role?: "user" | "admin";
