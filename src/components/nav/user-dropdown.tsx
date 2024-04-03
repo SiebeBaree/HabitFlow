@@ -10,7 +10,10 @@ export default function UserDropdown({ image, name }: UserDropdownProps) {
     return (
         <div className="border-highlight flex select-none items-center gap-2 rounded-md bg-secondary px-3 py-2">
             <Avatar className="h-6 w-6">
-                <AvatarImage src={image ?? "/logo.png"} />
+                <AvatarImage
+                    src={image ?? "/logo.png"}
+                    alt="User avatar of your account"
+                />
                 <AvatarFallback>
                     {name
                         .split(" ")

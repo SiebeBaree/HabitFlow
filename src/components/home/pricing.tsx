@@ -45,7 +45,7 @@ export default function Pricing() {
 function PricingCard(tier: Tier) {
     return (
         <Card className="flex w-[400px] flex-col px-4 pt-4">
-            <h4 className="absolute">{tier.name}</h4>
+            <p className="absolute text-2xl font-semibold">{tier.name}</p>
             <CardHeader>
                 <div className="mb-4 mt-10 flex items-baseline justify-center">
                     <p className="mr-2 text-2xl font-medium text-black/60 line-through">

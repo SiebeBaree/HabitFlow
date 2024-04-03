@@ -71,6 +71,7 @@ export default function DashboardSidebar({
                             <Avatar className="h-7 w-7">
                                 <AvatarImage
                                     src={session?.user?.image ?? "/logo.png"}
+                                    alt="User avatar of your account"
                                 />
                                 <AvatarFallback>
                                     {session?.user?.name

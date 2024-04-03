@@ -71,7 +71,7 @@ function TestimonialCard(testimonial: Testimonial) {
                     className="h-14 w-14 rounded-lg"
                 />
                 <div>
-                    <h5>{testimonial.name}</h5>
+                    <p className="text-xl font-semibold">{testimonial.name}</p>
                     <div className="flex items-center">
                         {new Array(5).fill(0).map((_, index) => (
                             <StarIcon
