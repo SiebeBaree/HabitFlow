@@ -4,6 +4,14 @@ import { CheckIcon, StarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
+const persons = [
+    "/logo.png",
+    "/logo.png",
+    "/logo.png",
+    "/logo.png",
+    "/logo.png",
+];
+
 export default function Hero() {
     return (
         <div className="relative z-10 my-10 flex w-full flex-grow flex-col items-center justify-center gap-12 xl:my-0 xl:flex-row xl:justify-between xl:gap-0">
@@ -81,23 +89,27 @@ export default function Hero() {
                     <Button className="mb-8 px-8 xl:mt-6">Improve now!</Button>
                 </div>
 
-                <div className="flex items-center justify-center gap-4 xl:justify-normal">
-                    <div className="flex">
-                        {new Array(5).fill(0).map((_, index) => (
-                            <div
+                <div className="flex flex-col items-center justify-center gap-4 sm:flex-row xl:justify-normal">
+                    <div className="ml-20 flex justify-center sm:ml-0 sm:justify-normal">
+                        {persons.map((url, index) => (
+                            <Image
                                 key={index}
+                                src={url}
+                                alt="Person that improved their life"
+                                height={48}
+                                width={48}
                                 className={cn(
-                                    "h-12 w-12 rounded-full border-4 border-white bg-gray-300",
+                                    "h-12 w-12 rounded-full border-4 border-white",
                                 )}
                                 style={{
                                     transform: `translateX(-${index * 40}%)`,
                                 }}
-                            ></div>
+                            />
                         ))}
                     </div>
 
-                    <div className="-ml-20">
-                        <div className="flex">
+                    <div className="text-center sm:-ml-20 sm:text-left">
+                        <div className="mb-1 flex justify-center sm:mb-0 sm:justify-normal">
                             {new Array(5).fill(0).map((_, index) => (
                                 <StarIcon
                                     key={index}
