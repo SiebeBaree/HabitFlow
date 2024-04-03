@@ -21,4 +21,8 @@ export type Route = {
     label: string;
     href: string;
     icon: LucideIcon;
+    isPremium?: boolean;
+    hideOnFree?: boolean;
 };
+
+export type Role = "free" | "starter" | "dedicated";

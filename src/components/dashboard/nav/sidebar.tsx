@@ -8,6 +8,8 @@ import type { Session } from "@auth/core";
 import { usePathname } from "next/navigation";
 import { logout } from "@/actions/logout";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export default function DashboardSidebar({
     session,
@@ -32,22 +34,37 @@ export default function DashboardSidebar({
                     <h1 className="text-2xl font-bold">HabitFlow</h1>
                 </Link>
                 <div className="flex flex-col gap-1">
-                    {routes.map((route) => (
-                        <div key={route.href}>
-                            <Link
-                                href={route.href}
-                                className={cn(
-                                    "group flex w-full cursor-pointer justify-start rounded-lg p-3 text-sm font-medium transition hover:bg-black/10",
-                                    pathname === route.href
-                                        ? "bg-white/10 text-accent-foreground"
-                                        : "text-foreground",
-                                )}
-                            >
-                                <route.icon className="mr-3 h-5 w-5" />
-                                {route.label}
-                            </Link>
-                        </div>
-                    ))}
+                    {routes.map((route) => {
+                        if (route.hideOnFree && session?.user.role === "free") {
+                            return null;
+                        }
+
+                        return (
+                            <div key={route.href}>
+                                <Link
+                                    href={route.href}
+                                    className={cn(
+                                        "group flex w-full cursor-pointer select-none justify-start rounded-lg p-3 text-sm font-medium transition hover:bg-black/10",
+                                        pathname === route.href
+                                            ? "bg-white/10 text-accent-foreground"
+                                            : "text-foreground",
+                                        route.isPremium &&
+                                            session?.user.role === "free" &&
+                                            "pointer-events-none opacity-50",
+                                    )}
+                                >
+                                    <route.icon className="mr-3 h-5 w-5" />
+                                    {route.label}
+                                    {route.isPremium &&
+                                        session?.user.role === "free" && (
+                                            <Badge className="ml-auto">
+                                                PRO
+                                            </Badge>
+                                        )}
+                                </Link>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
             <div className="px-3 py-2">
@@ -66,6 +83,20 @@ export default function DashboardSidebar({
                                 </button>
                             </form>
                         </div>
+
+                        {session.user.role === "free" && (
+                            <div className="mb-4 flex flex-col items-center justify-center rounded-md bg-background p-4">
+                                <p className="font-bold">
+                                    Upgrade your account
+                                </p>
+                                <p className="mb-4 text-center text-sm">
+                                    Create more habits, view analytics and more!
+                                </p>
+                                <Link href="/#pricing">
+                                    <Button>Upgrade now</Button>
+                                </Link>
+                            </div>
+                        )}
 
                         <div className="flex select-none items-center gap-2 rounded-md bg-background px-3 py-2">
                             <Avatar className="h-7 w-7">

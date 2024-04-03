@@ -17,7 +17,7 @@ import { type AdapterAccount } from "next-auth/adapters";
 
 export const createTable = pgTableCreator((name) => `habitflow_${name}`);
 
-export const roleEnum = pgEnum("role", ["user", "admin"]);
+export const roleEnum = pgEnum("role", ["free", "starter", "dedicated"]);
 
 export const users = createTable("user", {
     id: uuid("id").defaultRandom().notNull().primaryKey(),
@@ -28,7 +28,7 @@ export const users = createTable("user", {
         mode: "date",
     }),
     image: varchar("image", { length: 255 }),
-    role: roleEnum("role").default("user"),
+    role: roleEnum("role").default("free"),
 });
 
 export const usersRelations = relations(users, ({ many, one }) => ({

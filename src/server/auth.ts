@@ -5,12 +5,13 @@ import { createTable, users } from "@/server/db/schema";
 import authConfig from "@/server/auth.config";
 import { eq } from "drizzle-orm";
 import { getUserById } from "@/server/data/user";
+import type { Role } from "@/types";
 
 declare module "@auth/core" {
     interface Session extends DefaultSession {
         user: {
             id: string;
-            role: "user" | "admin";
+            role: Role;
         } & DefaultSession["user"];
     }
 }
@@ -19,14 +20,14 @@ declare module "next-auth" {
     interface Session extends DefaultSession {
         user: {
             id: string;
-            role: "user" | "admin";
+            role: Role;
         } & DefaultSession["user"];
     }
 }
 
 declare module "@auth/core/jwt" {
     interface JWT {
-        role?: "user" | "admin";
+        role?: Role;
     }
 }
 

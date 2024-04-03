@@ -1,5 +1,5 @@
-import CreateHabitForm from "@/components/app/create-habit-form";
-import ViewMonthly from "@/components/app/view-monthly";
+import CreateHabitForm from "@/components/dashboard/create-habit-form";
+import ViewMonthly from "@/components/dashboard/view-monthly";
 import { auth } from "@/server/auth";
 
 export default async function AppPage() {

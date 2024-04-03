@@ -3,7 +3,6 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import {
     LayoutDashboardIcon,
-    ArchiveIcon,
     HomeIcon,
     LineChartIcon,
     SettingsIcon,
@@ -42,19 +41,16 @@ export function getDashboardRoutes(): Route[] {
             href: "/app",
         },
         {
-            label: "Habits",
-            icon: ArchiveIcon,
-            href: "/app/habits",
-        },
-        {
             label: "Analytics",
             icon: LineChartIcon,
             href: "/app/analytics",
+            isPremium: true,
         },
         {
             label: "Billing",
             icon: CreditCardIcon,
             href: "/app/billing",
+            hideOnFree: true,
         },
         {
             label: "Settings",
