@@ -1,0 +1,35 @@
+[
+    {
+        "name": "Starter",
+        "checkout": "https://store.habitflow.pro/buy/60f8b977-b03e-4f4e-9954-c2eb2ee1fd5f?media=0",
+        "price": {
+            "was": 19,
+            "now": 12
+        },
+        "features": [
+            "Create unlimited habits",
+            "Set monthly goals",
+            "View habits back up to 90 days",
+            "Simple analytics"
+        ],
+        "planId": "238094",
+        "variantId": "326269"
+    },
+    {
+        "name": "Dedicated",
+        "checkout": "https://store.habitflow.pro/buy/4b929933-abf2-4703-92b0-7460c5ffc4c5?media=0",
+        "price": {
+            "was": 29,
+            "now": 20
+        },
+        "features": [
+            "Create unlimited habits",
+            "Set monthly goals",
+            "View lifetime data",
+            "Advanced analytics",
+            "Add time spent with habits"
+        ],
+        "planId": "238097",
+        "variantId": "326271"
+    }
+]

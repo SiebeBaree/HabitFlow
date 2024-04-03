@@ -8,52 +8,26 @@ import PageTitle from "@/components/home/page-title";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CheckIcon } from "lucide-react";
+import productJson from "@/lib/data/products.json";
+import SectionWrapper from "@/components/home/section-wrapper";
 
 type Tier = {
     name: string;
+    checkout: string;
     price: {
         was: number;
         now: number;
     };
     features: string[];
     planId: string;
+    variantId: string;
 };
 
-const tiers = [
-    {
-        name: "Starter",
-        price: {
-            was: 19,
-            now: 12,
-        },
-        features: [
-            "Create unlimited habits",
-            "Set monthly goals",
-            "View habits back up to 90 days",
-            "Simple analytics",
-        ],
-        planId: "0",
-    },
-    {
-        name: "Dedicated",
-        price: {
-            was: 29,
-            now: 20,
-        },
-        features: [
-            "Create unlimited habits",
-            "Set monthly goals",
-            "View lifetime data",
-            "Advanced analytics",
-            "Add time spent with habits",
-        ],
-        planId: "1",
-    },
-] as Tier[];
+const tiers: Tier[] = productJson;
 
 export default function Pricing() {
     return (
-        <div className="container my-56">
+        <SectionWrapper>
             <PageTitle title="Commit to your habits" id="pricing">
                 <Badge className="mt-3 text-sm">
                     ✨ Launch Discount - 35% OFF ✨
@@ -64,7 +38,7 @@ export default function Pricing() {
                     <PricingCard key={tier.planId} {...tier} />
                 ))}
             </div>
-        </div>
+        </SectionWrapper>
     );
 }
 
