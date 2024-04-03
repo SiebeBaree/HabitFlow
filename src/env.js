@@ -23,6 +23,8 @@ export const env = createEnv({
         VERCEL_URL: z.string(),
         REDIS_URL: z.string(),
         REDIS_TOKEN: z.string(),
+        LEMONSQUEEZY_API_KEY: z.string(),
+        LEMONSQUEEZY_STORE_ID: z.string(),
     },
     client: {},
     runtimeEnv: {
@@ -38,6 +40,8 @@ export const env = createEnv({
         VERCEL_URL: process.env.VERCEL_URL,
         REDIS_URL: process.env.REDIS_URL,
         REDIS_TOKEN: process.env.REDIS_TOKEN,
+        LEMONSQUEEZY_API_KEY: process.env.LEMONSQUEEZY_API_KEY,
+        LEMONSQUEEZY_STORE_ID: process.env.LEMONSQUEEZY_STORE_ID,
     },
     skipValidation: !!process.env.SKIP_ENV_VALIDATION,
     emptyStringAsUndefined: true,
