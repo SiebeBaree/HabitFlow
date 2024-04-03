@@ -7,6 +7,7 @@ import {
     HomeIcon,
     LineChartIcon,
     SettingsIcon,
+    CreditCardIcon,
 } from "lucide-react";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,6 +50,11 @@ export function getDashboardRoutes(): Route[] {
             label: "Statistics",
             icon: LineChartIcon,
             href: "/app/statistics",
+        },
+        {
+            label: "Billing",
+            icon: CreditCardIcon,
+            href: "/app/billing",
         },
         {
             label: "Settings",
