@@ -1,4 +1,15 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 await import("./src/env.js");
+
+import nextPWA from "next-pwa";
+
+/** @type {import("next-pwa").WithPWA} */
+const withPWA = nextPWA({
+    dest: "public",
+});
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -26,4 +37,4 @@ const config = {
     },
 };
 
-export default config;
+export default withPWA(config);
