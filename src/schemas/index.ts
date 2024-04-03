@@ -20,3 +20,22 @@ export const createHabitSchema = z.object({
             message: "Habit name must be at most 128 characters long.",
         }),
 });
+
+export const settingsAccountSchema = z.object({
+    name: z
+        .string()
+        .min(1, {
+            message: "Name is required.",
+        })
+        .max(50, {
+            message: "Name must be less than 50 characters long.",
+        }),
+    oldPassword: passwordSchema.optional(),
+    newPassword: passwordSchema.optional(),
+});
+
+export const settingsNotificationsSchema = z.object({
+    habitReminders: z.boolean(),
+    updateEmails: z.boolean(),
+    marketingEmails: z.boolean(),
+});

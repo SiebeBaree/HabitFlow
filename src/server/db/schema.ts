@@ -11,6 +11,7 @@ import {
     serial,
     uuid,
     date,
+    boolean,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
@@ -30,9 +31,17 @@ export const users = createTable("user", {
     role: roleEnum("role").default("user"),
 });
 
-export const usersRelations = relations(users, ({ many }) => ({
-    accounts: many(accounts),
+export const usersRelations = relations(users, ({ many, one }) => ({
+    accounts: one(accounts, {
+        fields: [users.id],
+        references: [accounts.userId],
+    }),
     habits: many(habits),
+    generalNotes: many(generalNotes),
+    userSettings: one(userSettings, {
+        fields: [users.id],
+        references: [userSettings.userId],
+    }),
 }));
 
 export const accounts = createTable(
@@ -179,3 +188,21 @@ export const generalNotes = createTable("general_note", {
     note: text("note"),
     createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
 });
+
+export const generalNotesRelations = relations(generalNotes, ({ one }) => ({
+    user: one(users, { fields: [generalNotes.userId], references: [users.id] }),
+}));
+
+export const userSettings = createTable("user_settings", {
+    userId: uuid("userId")
+        .notNull()
+        .references(() => users.id)
+        .primaryKey(),
+    habitReminders: boolean("habitReminders").notNull().default(true),
+    updateEmails: boolean("updateEmails").notNull().default(true),
+    marketingEmails: boolean("marketingEmails").notNull().default(true),
+});
+
+export const userSettingsRelations = relations(userSettings, ({ one }) => ({
+    user: one(users, { fields: [userSettings.userId], references: [users.id] }),
+}));

@@ -47,9 +47,9 @@ export function getDashboardRoutes(): Route[] {
             href: "/app/habits",
         },
         {
-            label: "Statistics",
+            label: "Analytics",
             icon: LineChartIcon,
-            href: "/app/statistics",
+            href: "/app/analytics",
         },
         {
             label: "Billing",
@@ -59,7 +59,7 @@ export function getDashboardRoutes(): Route[] {
         {
             label: "Settings",
             icon: SettingsIcon,
-            href: "/app/setttings",
+            href: "/app/settings",
         },
         {
             label: "Home",
