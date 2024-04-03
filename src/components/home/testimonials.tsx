@@ -1,6 +1,8 @@
 import { StarIcon } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import PageTitle from "@/components/home/page-title";
+import SectionWrapper from "@/components/home/section-wrapper";
+import Image from "next/image";
 
 type Testimonial = {
     text: string[];
@@ -16,7 +18,7 @@ const testimonials = [
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus elementum.",
         ],
         name: "John Doe",
-        image: "https://via.placeholder.com/56",
+        image: "/logo.png",
         stars: 5,
     },
     {
@@ -25,7 +27,7 @@ const testimonials = [
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus elementum.",
         ],
         name: "John Doe",
-        image: "https://via.placeholder.com/56",
+        image: "/logo.png",
         stars: 5,
     },
     {
@@ -34,21 +36,21 @@ const testimonials = [
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus elementum.",
         ],
         name: "John Doe",
-        image: "https://via.placeholder.com/56",
+        image: "/logo.png",
         stars: 5,
     },
 ] as Testimonial[];
 
 export default function Testimonials() {
     return (
-        <div className="container my-56">
+        <SectionWrapper>
             <PageTitle title="Improve your life, like these people did before you" />
             <div className="flex flex-wrap justify-center gap-6 md:flex-nowrap md:gap-4 lg:gap-8">
                 {testimonials.map((testimonial, index) => (
                     <TestimonialCard key={index} {...testimonial} />
                 ))}
             </div>
-        </div>
+        </SectionWrapper>
     );
 }
 
@@ -61,9 +63,11 @@ function TestimonialCard(testimonial: Testimonial) {
                 ))}
             </CardContent>
             <CardFooter className="mt-8 flex items-center gap-3 p-0 md:mt-6 lg:mt-8">
-                <img
+                <Image
                     src={testimonial.image}
                     alt={testimonial.name}
+                    width={56}
+                    height={56}
                     className="h-14 w-14 rounded-lg"
                 />
                 <div>

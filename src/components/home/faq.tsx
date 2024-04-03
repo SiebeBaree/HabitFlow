@@ -4,10 +4,11 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
+import SectionWrapper from "@/components/home/section-wrapper";
 
 export default function FrequentlyAskedQuestions() {
     return (
-        <div className="container my-56 flex flex-col justify-between gap-12 lg:flex-row lg:gap-32">
+        <SectionWrapper className="mt-56 flex flex-col justify-between gap-12 lg:flex-row lg:gap-32">
             <h2
                 className="mb-8 flex-1 text-center lg:mb-0 lg:text-start"
                 id="faq"
@@ -40,7 +41,7 @@ export default function FrequentlyAskedQuestions() {
                     Yes. It adheres to the WAI-ARIA design pattern.
                 </FAQItem>
             </Accordion>
-        </div>
+        </SectionWrapper>
     );
 }
 
