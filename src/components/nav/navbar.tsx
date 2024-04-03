@@ -63,7 +63,7 @@ export default async function Navbar() {
                         />
                         <DropdownMenuSeparator />
                         <form action={logout}>
-                            <button type="submit">
+                            <button type="submit" className="w-full">
                                 <DropdownMenuItem className="cursor-pointer text-red-500 transition-all duration-200 ease-in-out hover:bg-black/10">
                                     <LogOutIcon className="mr-2 h-4 w-4" />
                                     <span className="font-medium">Log out</span>
