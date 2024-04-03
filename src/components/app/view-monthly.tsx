@@ -71,9 +71,9 @@ export default function ViewMonthly({ userId }: { userId: string }) {
     const columns = [
         columnHelper.accessor("habitName", {
             id: "habits",
-            header: () => <div className="w-36 px-2">Habit</div>,
+            header: () => <div className="w-36 max-w-80 px-2">Habit</div>,
             cell: (props) => (
-                <div className="group relative p-2 text-left">
+                <div className="group relative max-w-80 break-words p-2 text-left">
                     {props.getValue()}
                     <AlertDialog>
                         <AlertDialogTrigger className="invisible absolute right-2 top-1/2 -translate-y-1/2 rounded-md bg-background p-1 text-red-500 transition-colors duration-300 hover:bg-red-500 hover:text-white group-hover:visible">
@@ -241,7 +241,8 @@ export default function ViewMonthly({ userId }: { userId: string }) {
                                         colSpan={columns.length}
                                         className="h-24 text-center"
                                     >
-                                        No results.
+                                        No habits found. Create one to get
+                                        started!
                                     </TableCell>
                                 </TableRow>
                             )}

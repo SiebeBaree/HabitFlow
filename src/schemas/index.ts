@@ -16,7 +16,7 @@ export const createHabitSchema = z.object({
         .min(1, {
             message: "Habit name must be at least 1 character long.",
         })
-        .max(255, {
-            message: "Habit name must be at most 255 characters long.",
+        .max(128, {
+            message: "Habit name must be at most 128 characters long.",
         }),
 });
