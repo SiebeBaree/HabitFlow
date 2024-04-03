@@ -1,7 +1,4 @@
-import NextAuth from "next-auth";
-import authConfig from "@/server/auth.config";
-
-const { auth: middleware } = NextAuth(authConfig);
+import { auth as middleware } from "@/server/auth";
 
 const authRoutes = [
     "/login",
