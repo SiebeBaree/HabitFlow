@@ -57,7 +57,7 @@ export default function SettingsNotificationsForm({
         <div>
             <div className="mb-8">
                 <h1 className="text-3xl font-bold">Email Notifications</h1>
-                <p className="text-balance text-muted-foreground">
+                <p className="text-balance text-foreground/60">
                     Manage your email notifications.
                 </p>
             </div>
@@ -142,7 +142,7 @@ export default function SettingsNotificationsForm({
                         />
                     </div>
 
-                    <p className="-mt-2 text-sm text-muted-foreground">
+                    <p className="-mt-2 text-sm text-foreground/60">
                         We don&apos;t spam. You can unsubscribe at any time.
                     </p>
 

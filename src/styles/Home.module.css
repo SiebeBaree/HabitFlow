@@ -5,5 +5,8 @@
 @media screen and (min-width: 1800px) {
     .edge {
         right: 0;
+        position: static;
+        top: none;
+        transform: none;
     }
 }

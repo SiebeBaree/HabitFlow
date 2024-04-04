@@ -36,21 +36,17 @@ export default async function Pricing() {
                     ✨ Launch Discount - 35% OFF ✨
                 </Badge>
             </PageTitle>
-            <div className="flex flex-wrap justify-center gap-6 md:flex-nowrap md:gap-4 lg:gap-8">
+            <div className="flex flex-wrap justify-center gap-6 md:gap-4 lg:flex-nowrap xl:gap-8">
                 <Card className="flex w-[400px] flex-col px-4 pt-4">
                     <p className="absolute text-2xl font-semibold">Trial</p>
-                    <CardHeader>
-                        <div className="mb-4 mt-10 flex items-baseline justify-center">
-                            <p className="text-5xl font-bold">
-                                $0
-                                <span className="text-sm font-medium text-black/40">
-                                    {" "}
-                                    USD
-                                </span>
-                            </p>
-                        </div>
+                    <CardHeader className="mb-4 mt-10 flex flex-row items-baseline justify-center gap-2">
+                        <div className="w-12" />
+                        <p className="text-5xl font-bold">$0</p>
+                        <p className="w-12 text-sm font-medium text-black/40">
+                            USD
+                        </p>
                     </CardHeader>
-                    <CardContent className="flex flex-col gap-4 p-0">
+                    <CardContent className="p-0">
                         <ul className="space-y-4">
                             <li className="flex items-center gap-3">
                                 <CheckIcon size={20} className="text-primary" />
@@ -125,21 +121,14 @@ function PricingCard({
                 </Badge>
             )}
             <p className="absolute text-2xl font-semibold">{tier.name}</p>
-            <CardHeader>
-                <div className="mb-4 mt-10 flex items-baseline justify-center">
-                    <p className="mr-2 text-2xl font-medium text-black/60 line-through">
-                        ${tier.price.was}
-                    </p>
-                    <p className="text-5xl font-bold">
-                        ${tier.price.now}
-                        <span className="text-sm font-medium text-black/40">
-                            {" "}
-                            USD
-                        </span>
-                    </p>
-                </div>
+            <CardHeader className="mb-4 mt-10 flex flex-row items-baseline justify-center gap-2">
+                <p className="w-12 text-right text-2xl font-medium text-black/60 line-through">
+                    ${tier.price.was}
+                </p>
+                <p className="text-5xl font-bold">${tier.price.now}</p>
+                <p className="w-12 text-sm font-medium text-black/40">USD</p>
             </CardHeader>
-            <CardContent className="flex flex-col gap-4 p-0">
+            <CardContent className="p-0">
                 <ul className="space-y-4">
                     {tier.features.map((feature, index) => (
                         <li

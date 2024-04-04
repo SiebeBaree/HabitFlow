@@ -54,7 +54,7 @@ export default function RegisterPage() {
         <>
             <div className="grid gap-2 text-center">
                 <h1 className="text-3xl font-bold">Create an account</h1>
-                <p className="text-balance text-muted-foreground">
+                <p className="text-balance text-foreground/60">
                     Create an account to start building habits
                 </p>
             </div>

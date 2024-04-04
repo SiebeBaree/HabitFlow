@@ -8,7 +8,7 @@ type UserDropdownProps = {
 
 export default function UserDropdown({ image, name }: UserDropdownProps) {
     return (
-        <div className="border-highlight flex select-none items-center gap-2 rounded-md bg-secondary px-3 py-2">
+        <div className="flex select-none items-center gap-2 rounded-md bg-card px-3 py-2">
             <Avatar className="h-6 w-6">
                 <AvatarImage
                     src={image ?? "/logo.png"}
@@ -22,7 +22,7 @@ export default function UserDropdown({ image, name }: UserDropdownProps) {
                 </AvatarFallback>
             </Avatar>
             <p className="text-sm font-medium">{name}</p>
-            <ChevronDown className="h-4 w-4 text-primary transition-all duration-300 ease-in-out group-data-[state=open]:rotate-180" />
+            <ChevronDown className="h-4 w-4 text-foreground transition-all duration-300 ease-in-out group-data-[state=open]:rotate-180" />
         </div>
     );
 }

@@ -131,10 +131,11 @@ export default function ViewMonthly({
                     <div
                         className={cn(
                             "flex h-full max-w-8 flex-col justify-between text-center",
-                            isToday(i) && "bg-primary text-primary-foreground",
+                            isToday(i + 1) &&
+                                "bg-primary text-primary-foreground",
                         )}
                     >
-                        <p className="mb-1 text-xs">{getDayOfWeek(i)}</p>
+                        <p className="mb-1 text-xs">{getDayOfWeek(i + 1)}</p>
                         <p>{i + 1}</p>
                     </div>
                 ),

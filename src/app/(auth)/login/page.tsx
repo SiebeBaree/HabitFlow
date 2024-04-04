@@ -71,7 +71,7 @@ export default function LoginPage() {
         <>
             <div className="grid gap-2 text-center">
                 <h1 className="text-3xl font-bold">Welcome back</h1>
-                <p className="text-balance text-muted-foreground">
+                <p className="text-balance text-foreground/60">
                     Enter your email below to login to your account
                 </p>
             </div>
@@ -103,11 +103,11 @@ export default function LoginPage() {
                             name="password"
                             render={({ field }) => (
                                 <FormItem>
-                                    <div className="flex items-center">
+                                    <div className="flex items-baseline">
                                         <FormLabel>Password</FormLabel>
                                         <Link
                                             href="/forgot-password"
-                                            className="ml-auto inline-block text-sm underline"
+                                            className="ml-auto inline-block text-xs underline"
                                         >
                                             Forgot your password?
                                         </Link>

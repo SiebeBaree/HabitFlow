@@ -78,7 +78,7 @@ export default function MonthSelector({
             <button
                 disabled={disablePrevious}
                 onClick={goToPreviousMonth}
-                className={cn(disablePrevious && "opacity-50")}
+                className={cn("text-primary", disablePrevious && "opacity-50")}
             >
                 <ChevronLeftIcon />
             </button>
@@ -87,7 +87,7 @@ export default function MonthSelector({
             <button
                 disabled={disableNext}
                 onClick={goToNextMonth}
-                className={cn(disableNext && "opacity-50")}
+                className={cn("text-primary", disableNext && "opacity-50")}
             >
                 <ChevronRightIcon />
             </button>

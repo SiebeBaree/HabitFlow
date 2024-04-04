@@ -3,7 +3,7 @@ import NavItem from "./nav-item";
 
 export default function Footer() {
     return (
-        <div className="bg-secondary">
+        <div className="bg-card">
             <footer className="container flex flex-col items-center justify-between gap-10 py-12 md:flex-row md:gap-0">
                 <div className="text-center md:text-start">
                     <h3>HabitFlow</h3>

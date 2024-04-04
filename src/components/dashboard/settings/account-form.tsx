@@ -54,7 +54,7 @@ export default function SettingsAccountForm({
         <div>
             <div className="mb-8">
                 <h1 className="text-3xl font-bold">Account</h1>
-                <p className="text-balance text-muted-foreground">
+                <p className="text-balance text-foreground/60">
                     Update your account settings.
                 </p>
             </div>

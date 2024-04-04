@@ -7,11 +7,11 @@ export default function WhyHabitFlow() {
         <SectionWrapper>
             <PageTitle title="Why use HabitFlow?" />
 
-            <div className="flex justify-center gap-16">
+            <div className="flex flex-col items-center justify-center gap-24 md:flex-row md:items-start md:gap-8 xl:gap-16">
                 <div className="w-full max-w-[500px]">
                     <AboutCard
                         text="NOT using HabitFlow"
-                        className="bg-red-500/80 text-center text-xl font-semibold text-background"
+                        className="bg-[#F43F4B] text-center text-xl font-semibold text-background"
                     />
                     <AboutCard text="You get motivated and start a couple of new habits" />
                     <AboutCard text="You lose motivation and skip some days" />
@@ -23,7 +23,7 @@ export default function WhyHabitFlow() {
                 <div className="w-full max-w-[500px]">
                     <AboutCard
                         text="Using HabitFlow"
-                        className="bg-green-500/80 text-center text-xl font-semibold text-background"
+                        className="bg-[#2ECA73] text-center text-xl font-semibold text-background"
                     />
                     <AboutCard text="You get motivated and write your habits down in HabitFlow" />
                     <AboutCard text="You lose motivation and skip some days" />
@@ -49,12 +49,7 @@ function AboutCard({
 }) {
     return (
         <div>
-            <p
-                className={cn(
-                    "w-full rounded-md border bg-card px-4 py-2",
-                    className,
-                )}
-            >
+            <p className={cn("w-full rounded-md bg-card px-4 py-2", className)}>
                 {text}
             </p>
             {!isLast && (
@@ -68,7 +63,7 @@ function AboutCard({
                 >
                     <path
                         d="M9 40L17.6603 25L0.339747 25L9 40ZM7.5 6.55671e-08L7.5 26.5L10.5 26.5L10.5 -6.55671e-08L7.5 6.55671e-08Z"
-                        fill="hsl(var(--border))"
+                        fill="hsl(var(--card))"
                     />
                 </svg>
             )}

@@ -94,7 +94,7 @@ function DropdownItem({
         <Link href={href ?? "#"}>
             <DropdownMenuItem
                 disabled={disabled}
-                className="cursor-pointer transition-all duration-200 ease-in-out hover:bg-black/10"
+                className="cursor-pointer transition-all duration-200 ease-in-out hover:bg-primary/10"
             >
                 {Icon && <Icon className="mr-2 h-4 w-4" />}
                 <span>{name}</span>

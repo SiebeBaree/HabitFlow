@@ -23,7 +23,7 @@ export default function DashboardSidebar({
     const routes = getDashboardRoutes();
 
     return (
-        <div className="flex h-full flex-col bg-secondary py-4 text-accent-foreground">
+        <div className="flex h-full flex-col bg-card py-4 text-card-foreground">
             <div className="flex-1 px-3 py-2">
                 <Link href={"/app"} className="mb-12 flex items-center pl-3">
                     <div className="relative mr-3 h-8 w-8">
@@ -47,9 +47,9 @@ export default function DashboardSidebar({
                                 <Link
                                     href={route.href}
                                     className={cn(
-                                        "group flex w-full cursor-pointer select-none justify-start rounded-lg p-3 text-sm font-medium transition hover:bg-black/10",
+                                        "group flex w-full cursor-pointer select-none justify-start rounded-lg p-3 text-sm font-medium transition-all duration-100 ease-in-out hover:bg-white hover:font-semibold hover:text-primary",
                                         pathname === route.href
-                                            ? "bg-white/10 text-accent-foreground"
+                                            ? "bg-white font-semibold text-primary"
                                             : "text-foreground",
                                         route.isPremium &&
                                             premium.role === "free" &&
@@ -78,7 +78,7 @@ export default function DashboardSidebar({
                                 <button
                                     type="submit"
                                     className={
-                                        "group flex w-full cursor-pointer justify-start rounded-lg p-3 text-sm font-bold text-red-400 transition hover:bg-black/10"
+                                        "group flex w-full cursor-pointer justify-start rounded-lg p-3 text-sm font-bold text-red-400 transition hover:bg-white hover:font-semibold"
                                     }
                                 >
                                     <LogOutIcon className="mr-3 h-5 w-5" />
