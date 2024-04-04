@@ -25,4 +25,15 @@ export type Route = {
     hideOnFree?: boolean;
 };
 
-export type Role = "free" | "starter" | "dedicated";
+export type Role = "user" | "admin";
+
+export type Product = {
+    name: string;
+    price: {
+        was: number;
+        now: number;
+    };
+    features: string[];
+    planId: string;
+    variantId: string;
+};

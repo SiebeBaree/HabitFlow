@@ -10,10 +10,13 @@ import { Badge } from "@/components/ui/badge";
 import { CheckIcon } from "lucide-react";
 import productJson from "@/lib/data/products.json";
 import SectionWrapper from "@/components/home/section-wrapper";
+import Link from "next/link";
+import { auth } from "@/server/auth";
+import { getPremiumByUserId } from "@/server/data/user";
+import CheckoutButton from "./checkout-button";
 
 type Tier = {
     name: string;
-    checkout: string;
     price: {
         was: number;
         now: number;
@@ -25,7 +28,16 @@ type Tier = {
 
 const tiers: Tier[] = productJson;
 
-export default function Pricing() {
+export default async function Pricing() {
+    const session = await auth();
+    const isLoggedIn = !!session;
+
+    let alreadySubscribed = false;
+    if (session) {
+        const premium = await getPremiumByUserId(session.user.id);
+        alreadySubscribed = premium.role !== "free";
+    }
+
     return (
         <SectionWrapper>
             <PageTitle title="Commit to your habits" id="pricing">
@@ -35,14 +47,27 @@ export default function Pricing() {
             </PageTitle>
             <div className="flex flex-wrap justify-center gap-6 md:flex-nowrap md:gap-4 lg:gap-8">
                 {tiers.map((tier) => (
-                    <PricingCard key={tier.planId} {...tier} />
+                    <PricingCard
+                        key={tier.planId}
+                        tier={tier}
+                        isLoggedIn={isLoggedIn}
+                        alreadySubscribed={alreadySubscribed}
+                    />
                 ))}
             </div>
         </SectionWrapper>
     );
 }
 
-function PricingCard(tier: Tier) {
+function PricingCard({
+    tier,
+    isLoggedIn,
+    alreadySubscribed,
+}: {
+    tier: Tier;
+    isLoggedIn: boolean;
+    alreadySubscribed: boolean;
+}) {
     return (
         <Card className="flex w-[400px] flex-col px-4 pt-4">
             <p className="absolute text-2xl font-semibold">{tier.name}</p>
@@ -74,7 +99,21 @@ function PricingCard(tier: Tier) {
                 </ul>
             </CardContent>
             <CardFooter className="mt-12 flex flex-grow flex-col justify-end p-0 pb-2">
-                <Button className="w-[200px]">Start now!</Button>
+                {isLoggedIn ? (
+                    alreadySubscribed ? (
+                        <p className="text-green-700">
+                            You are already subscribed!
+                        </p>
+                    ) : (
+                        <CheckoutButton
+                            variantId={parseInt(tier.variantId, 10)}
+                        />
+                    )
+                ) : (
+                    <Link href={`/login`}>
+                        <Button className="w-[200px]">Start now!</Button>
+                    </Link>
+                )}
                 <p className="mt-2 text-sm text-black/70">
                     Pay once. Use forever.
                 </p>

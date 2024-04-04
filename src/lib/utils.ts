@@ -1,6 +1,7 @@
-import type { Route } from "@/types";
+import type { Product, Route } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import products from "@/lib/data/products.json";
 import {
     LayoutDashboardIcon,
     HomeIcon,
@@ -63,4 +64,55 @@ export function getDashboardRoutes(): Route[] {
             href: "/",
         },
     ];
+}
+
+function isObject(value: unknown): value is Record<string, unknown> {
+    return typeof value === "object" && value !== null;
+}
+
+export function webhookHasMeta(obj: unknown): obj is {
+    meta: {
+        event_name: string;
+        custom_data: {
+            user_id: string;
+        };
+    };
+} {
+    if (
+        isObject(obj) &&
+        isObject(obj.meta) &&
+        typeof obj.meta.event_name === "string" &&
+        isObject(obj.meta.custom_data) &&
+        typeof obj.meta.custom_data.user_id === "string"
+    ) {
+        return true;
+    }
+    return false;
+}
+
+export function webhookHasData(obj: unknown): obj is {
+    data: {
+        attributes: Record<string, unknown> & {
+            first_order_item: {
+                id: number;
+                price_id: number;
+                order_id: number;
+                variant_id: number;
+                price: number;
+            };
+        };
+        id: string;
+    };
+} {
+    return (
+        isObject(obj) &&
+        "data" in obj &&
+        isObject(obj.data) &&
+        "attributes" in obj.data
+    );
+}
+
+export function getProduct(variantId: number | string): Product | undefined {
+    const variantIdStr = variantId.toString();
+    return products.find((product) => product.variantId === variantIdStr);
 }

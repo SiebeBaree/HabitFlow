@@ -1,4 +1,4 @@
-import { relations } from "drizzle-orm";
+import { type InferSelectModel, relations } from "drizzle-orm";
 import {
     index,
     integer,
@@ -12,12 +12,18 @@ import {
     uuid,
     date,
     boolean,
+    jsonb,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
 export const createTable = pgTableCreator((name) => `habitflow_${name}`);
 
-export const roleEnum = pgEnum("role", ["free", "starter", "dedicated"]);
+export const roleEnum = pgEnum("role", ["user", "admin"]);
+export const premiumEnum = pgEnum("premium_role", [
+    "free",
+    "starter",
+    "dedicated",
+]);
 
 export const users = createTable("user", {
     id: uuid("id").defaultRandom().notNull().primaryKey(),
@@ -28,7 +34,7 @@ export const users = createTable("user", {
         mode: "date",
     }),
     image: varchar("image", { length: 255 }),
-    role: roleEnum("role").default("free"),
+    role: roleEnum("role").default("user"),
 });
 
 export const usersRelations = relations(users, ({ many, one }) => ({
@@ -193,6 +199,16 @@ export const generalNotesRelations = relations(generalNotes, ({ one }) => ({
     user: one(users, { fields: [generalNotes.userId], references: [users.id] }),
 }));
 
+export const premium = createTable("premium", {
+    id: serial("id").primaryKey(),
+    userId: uuid("userId")
+        .notNull()
+        .references(() => users.id),
+    role: premiumEnum("role").notNull().default("free"),
+});
+
+export type Premium = InferSelectModel<typeof premium>;
+
 export const userSettings = createTable("user_settings", {
     userId: uuid("userId")
         .notNull()
@@ -206,3 +222,31 @@ export const userSettings = createTable("user_settings", {
 export const userSettingsRelations = relations(userSettings, ({ one }) => ({
     user: one(users, { fields: [userSettings.userId], references: [users.id] }),
 }));
+
+export const webhookEvents = createTable("webhook_event", {
+    id: serial("id").primaryKey(),
+    createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+    eventName: text("eventName").notNull(),
+    processed: boolean("processed").default(false),
+    body: jsonb("body").notNull(),
+    processingError: text("processingError"),
+});
+
+export type WebhookEvent = InferSelectModel<typeof webhookEvents>;
+
+export const orders = createTable("order", {
+    id: serial("id").primaryKey(),
+    uid: uuid("uid").notNull(),
+    lemonSqueezyId: text("lemonSqueezyId").unique().notNull(),
+    orderId: integer("orderId").notNull(),
+    name: text("name").notNull(),
+    email: text("email").notNull(),
+    status: text("status").notNull(),
+    statusFormatted: text("statusFormatted").notNull(),
+    refunded: boolean("refunded").default(false),
+    refundedAt: date("refundedAt"),
+    price: text("price").notNull(),
+    productId: integer("productId").notNull(),
+    variantId: integer("variantId").notNull(),
+    createdAt: text("createdAt").notNull(),
+});
