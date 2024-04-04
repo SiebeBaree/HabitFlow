@@ -3,7 +3,7 @@
 import type { z } from "zod";
 import { registerSchema } from "./schema";
 import { db } from "@/server/db";
-import { users } from "@/server/db/schema";
+import { premium, users } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import { generateVerificationToken } from "@/lib/tokens";
@@ -56,10 +56,19 @@ export async function register(values: z.infer<typeof registerSchema>) {
         };
     }
 
-    await db.insert(users).values({
-        name,
-        email,
-        password: hashedPassword,
+    const user = await db
+        .insert(users)
+        .values({
+            name,
+            email,
+            password: hashedPassword,
+        })
+        .returning({
+            id: users.id,
+        });
+
+    await db.insert(premium).values({
+        userId: user[0]!.id,
     });
 
     const verificationToken = await generateVerificationToken(email);

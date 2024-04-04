@@ -10,11 +10,14 @@ import { logout } from "@/actions/logout";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import type { Premium } from "@/server/db/schema";
 
 export default function DashboardSidebar({
     session,
+    premium,
 }: {
     session: Session | null;
+    premium: Premium;
 }) {
     const pathname = usePathname();
     const routes = getDashboardRoutes();
@@ -35,7 +38,7 @@ export default function DashboardSidebar({
                 </Link>
                 <div className="flex flex-col gap-1">
                     {routes.map((route) => {
-                        if (route.hideOnFree && session?.user.role === "free") {
+                        if (route.hideOnFree && premium.role === "free") {
                             return null;
                         }
 
@@ -49,14 +52,14 @@ export default function DashboardSidebar({
                                             ? "bg-white/10 text-accent-foreground"
                                             : "text-foreground",
                                         route.isPremium &&
-                                            session?.user.role === "free" &&
+                                            premium.role === "free" &&
                                             "pointer-events-none opacity-50",
                                     )}
                                 >
                                     <route.icon className="mr-3 h-5 w-5" />
                                     {route.label}
                                     {route.isPremium &&
-                                        session?.user.role === "free" && (
+                                        premium.role === "free" && (
                                             <Badge className="ml-auto">
                                                 PRO
                                             </Badge>
@@ -84,7 +87,7 @@ export default function DashboardSidebar({
                             </form>
                         </div>
 
-                        {session.user.role === "free" && (
+                        {premium.role === "free" && (
                             <div className="mb-4 flex flex-col items-center justify-center rounded-md bg-background p-4">
                                 <p className="font-bold">
                                     Upgrade your account

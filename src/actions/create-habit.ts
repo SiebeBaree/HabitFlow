@@ -3,6 +3,7 @@
 import { createHabitSchema } from "@/schemas";
 import { auth } from "@/server/auth";
 import { createRateLimit } from "@/server/data/ratelimit";
+import { getPremiumByUserId } from "@/server/data/user";
 import { db } from "@/server/db";
 import { habits } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
@@ -29,15 +30,17 @@ export async function createHabit(values: z.infer<typeof createHabitSchema>) {
         };
     }
 
+    const premium = await getPremiumByUserId(session.user.id);
+
     let habitCount = 0;
-    if (session.user.role === "free") {
+    if (premium.role === "free") {
         const allHabits = await db
             .select()
             .from(habits)
             .where(eq(habits.userId, session.user.id));
 
         habitCount = allHabits.length;
-        if (habitCount >= 3 && session.user.role === "free") {
+        if (habitCount >= 3 && premium.role === "free") {
             return {
                 success: false,
                 error: "You need to upgrade to a premium account to create more habits.",
@@ -71,7 +74,7 @@ export async function createHabit(values: z.infer<typeof createHabitSchema>) {
     });
 
     revalidatePath("/app");
-    const showModal = session.user.role === "free" && habitCount + 1 === 3;
+    const showModal = premium.role === "free" && habitCount + 1 === 3;
     return {
         success: true,
         showModal: showModal,

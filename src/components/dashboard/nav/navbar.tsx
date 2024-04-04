@@ -7,11 +7,14 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import DashboardSidebar from "@/components/dashboard/nav/sidebar";
 import { getDashboardRoutes } from "@/lib/utils";
+import type { Premium } from "@/server/db/schema";
 
 export default function DashboardNavbar({
     session,
+    premium,
 }: {
     session: Session | null;
+    premium: Premium;
 }) {
     const pathname = usePathname();
     const routes = getDashboardRoutes();
@@ -37,7 +40,7 @@ export default function DashboardNavbar({
                         </Button>
                     </SheetTrigger>
                     <SheetContent className="p-0">
-                        <DashboardSidebar session={session} />
+                        <DashboardSidebar session={session} premium={premium} />
                     </SheetContent>
                 </Sheet>
             </div>
