@@ -14,19 +14,9 @@ import Link from "next/link";
 import { auth } from "@/server/auth";
 import { getPremiumByUserId } from "@/server/data/user";
 import CheckoutButton from "./checkout-button";
+import type { Product } from "@/types";
 
-type Tier = {
-    name: string;
-    price: {
-        was: number;
-        now: number;
-    };
-    features: string[];
-    planId: string;
-    variantId: string;
-};
-
-const tiers: Tier[] = productJson;
+const tiers: Product[] = productJson;
 
 export default async function Pricing() {
     const session = await auth();
@@ -64,7 +54,7 @@ function PricingCard({
     isLoggedIn,
     alreadySubscribed,
 }: {
-    tier: Tier;
+    tier: Product;
     isLoggedIn: boolean;
     alreadySubscribed: boolean;
 }) {
