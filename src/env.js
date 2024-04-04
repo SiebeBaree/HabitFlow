@@ -25,6 +25,8 @@ export const env = createEnv({
         REDIS_TOKEN: z.string(),
         LEMONSQUEEZY_API_KEY: z.string(),
         LEMONSQUEEZY_STORE_ID: z.string(),
+        LEMONSQUEEZY_WEBHOOK_SECRET: z.string(),
+        WEBHOOK_URL: z.string(),
     },
     client: {},
     runtimeEnv: {
@@ -42,6 +44,8 @@ export const env = createEnv({
         REDIS_TOKEN: process.env.REDIS_TOKEN,
         LEMONSQUEEZY_API_KEY: process.env.LEMONSQUEEZY_API_KEY,
         LEMONSQUEEZY_STORE_ID: process.env.LEMONSQUEEZY_STORE_ID,
+        LEMONSQUEEZY_WEBHOOK_SECRET: process.env.LEMONSQUEEZY_WEBHOOK_SECRET,
+        WEBHOOK_URL: process.env.WEBHOOK_URL,
     },
     skipValidation: !!process.env.SKIP_ENV_VALIDATION,
     emptyStringAsUndefined: true,
