@@ -1,5 +1,10 @@
-import { getFirstDayOfMonth, getLastDayOfMonth } from "@/lib/utils";
+import {
+    daysBetween,
+    getFirstDayOfMonth,
+    getLastDayOfMonth,
+} from "@/lib/utils";
 import { auth } from "@/server/auth";
+import { getPremiumByUserId } from "@/server/data/user";
 import { db } from "@/server/db";
 import { dailyTracking, habits } from "@/server/db/schema";
 import type { MonthlyViewData } from "@/types";
@@ -28,6 +33,21 @@ export async function GET(request: NextRequest) {
     const date = validatedData.data.date;
     const fromDate = getFirstDayOfMonth(date);
     const toDate = getLastDayOfMonth(date);
+    const premium = await getPremiumByUserId(session.user.id);
+
+    if (fromDate.getTime() > new Date().getTime()) {
+        return NextResponse.json({ error: "Invalid date" }, { status: 403 });
+    } else if (premium.role === "free" && toDate < new Date()) {
+        return NextResponse.json(
+            { error: "You can only view data from this month!" },
+            { status: 400 },
+        );
+    } else if (premium.role === "starter" && daysBetween(toDate) > 90) {
+        return NextResponse.json(
+            { error: "You can only view data from the last 90 days!" },
+            { status: 403 },
+        );
+    }
 
     const habitData = await db
         .select()

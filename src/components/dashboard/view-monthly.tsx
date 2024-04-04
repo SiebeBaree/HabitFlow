@@ -37,10 +37,17 @@ import {
 } from "@/components/ui/alert-dialog";
 import { deleteHabit } from "@/actions/delete-habit";
 import MonthSelector from "./month-selector";
+import type { Premium } from "@/server/db/schema";
 
 const columnHelper = createColumnHelper<MonthlyViewData>();
 
-export default function ViewMonthly({ userId }: { userId: string }) {
+export default function ViewMonthly({
+    userId,
+    premium,
+}: {
+    userId: string;
+    premium: Premium;
+}) {
     const [date, setDate] = useState<Date>(new Date());
     const {
         data: queryData,
@@ -184,7 +191,11 @@ export default function ViewMonthly({ userId }: { userId: string }) {
             ) : (
                 <>
                     <div className="mb-4">
-                        <MonthSelector date={date} setDate={setDate} />
+                        <MonthSelector
+                            date={date}
+                            setDate={setDate}
+                            premium={premium}
+                        />
                     </div>
                     <Table className="border-collapse border">
                         <TableHeader>

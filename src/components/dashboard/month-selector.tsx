@@ -1,16 +1,24 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, daysBetween, getLastDayOfMonth } from "@/lib/utils";
+import type { Premium } from "@/server/db/schema";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useState } from "react";
 
 type MonthSelectorProps = {
     date: Date;
     setDate: (date: Date) => void;
+    premium: Premium;
 };
 
-export default function MonthSelector({ date, setDate }: MonthSelectorProps) {
-    const [disablePrevious, setDisablePrevious] = useState<boolean>(false);
+export default function MonthSelector({
+    date,
+    setDate,
+    premium,
+}: MonthSelectorProps) {
+    const [disablePrevious, setDisablePrevious] = useState<boolean>(
+        premium.role === "free",
+    );
     const [disableNext, setDisableNext] = useState<boolean>(
         isCurrentMonth(date),
     );
@@ -23,7 +31,18 @@ export default function MonthSelector({ date, setDate }: MonthSelectorProps) {
         if (disablePrevious) return;
 
         const previousMonth = new Date(date.getFullYear(), date.getMonth() - 1);
-        if (isBefore(previousMonth, 2023)) {
+        const lastDayOfPreviousMonth = getLastDayOfMonth(previousMonth);
+
+        if (premium.role === "free" && lastDayOfPreviousMonth < new Date()) {
+            setDisablePrevious(true);
+            return;
+        } else if (
+            premium.role === "starter" &&
+            daysBetween(lastDayOfPreviousMonth) > 90
+        ) {
+            setDisablePrevious(true);
+            return;
+        } else if (isBefore(previousMonth, 2023)) {
             setDisablePrevious(true);
             return;
         }
