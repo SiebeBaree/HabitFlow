@@ -1,13 +1,7 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 await import("./src/env.js");
+import withPWAInit from "@ducanh2912/next-pwa";
 
-import nextPWA from "next-pwa";
-
-/** @type {import("next-pwa").WithPWA} */
-const withPWA = nextPWA({
+const withPWA = withPWAInit({
     dest: "public",
     disable: process.env.NODE_ENV === "development",
 });

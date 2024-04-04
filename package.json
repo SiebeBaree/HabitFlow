@@ -14,6 +14,7 @@
     "dependencies": {
         "@auth/core": "^0.28.1",
         "@auth/drizzle-adapter": "^0.8.1",
+        "@ducanh2912/next-pwa": "^10.2.5",
         "@hookform/resolvers": "^3.3.4",
         "@lemonsqueezy/lemonsqueezy.js": "^2.2.0",
         "@neondatabase/serverless": "^0.9.0",
@@ -31,14 +32,13 @@
         "@tanstack/react-table": "^8.15.3",
         "@upstash/ratelimit": "^1.0.1",
         "@upstash/redis": "^1.29.0",
-        "bcryptjs": "^2.4.3",
+        "bcrypt-ts": "^5.0.2",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.0",
         "drizzle-orm": "^0.30.5",
         "lucide-react": "^0.363.0",
         "next": "14.1.4",
         "next-auth": "5.0.0-beta.16",
-        "next-pwa": "^5.6.0",
         "next-themes": "^0.3.0",
         "postgres": "^3.3.5",
         "react": "18.2.0",
@@ -53,7 +53,6 @@
         "zustand": "^4.5.2"
     },
     "devDependencies": {
-        "@types/bcryptjs": "^2.4.6",
         "@types/eslint": "^8.56.6",
         "@types/next-pwa": "^5.6.9",
         "@types/node": "^20.11.30",
@@ -71,7 +70,8 @@
         "prettier": "^3.2.5",
         "prettier-plugin-tailwindcss": "^0.5.13",
         "tailwindcss": "^3.4.3",
-        "typescript": "^5.4.3"
+        "typescript": "^5.4.3",
+        "webpack": "^5.91.0"
     },
     "ct3aMetadata": {
         "initVersion": "7.30.0"
