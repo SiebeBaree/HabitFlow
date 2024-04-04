@@ -15,6 +15,7 @@ import { auth } from "@/server/auth";
 import { getPremiumByUserId } from "@/server/data/user";
 import CheckoutButton from "./checkout-button";
 import type { Product } from "@/types";
+import { cn } from "@/lib/utils";
 
 const tiers: Product[] = productJson;
 
@@ -92,6 +93,7 @@ export default async function Pricing() {
                         tier={tier}
                         isLoggedIn={isLoggedIn}
                         alreadySubscribed={alreadySubscribed}
+                        isPremium={tier.name === "Dedicated"}
                     />
                 ))}
             </div>
@@ -103,13 +105,25 @@ function PricingCard({
     tier,
     isLoggedIn,
     alreadySubscribed,
+    isPremium,
 }: {
     tier: Product;
     isLoggedIn: boolean;
     alreadySubscribed: boolean;
+    isPremium?: boolean;
 }) {
     return (
-        <Card className="flex w-[400px] flex-col px-4 pt-4">
+        <Card
+            className={cn(
+                "relative flex w-[400px] flex-col px-4 pt-4",
+                isPremium && "border-[3px] border-primary",
+            )}
+        >
+            {isPremium && (
+                <Badge className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 px-5 text-center text-sm">
+                    Most Popular
+                </Badge>
+            )}
             <p className="absolute text-2xl font-semibold">{tier.name}</p>
             <CardHeader>
                 <div className="mb-4 mt-10 flex items-baseline justify-center">
