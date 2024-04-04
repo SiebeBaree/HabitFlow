@@ -3,16 +3,23 @@ import { Button } from "@/components/ui/button";
 import { CheckIcon, StarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { db } from "@/server/db";
+import { orders } from "@/server/db/schema";
 
 const persons = [
-    "/logo.png",
-    "/logo.png",
-    "/logo.png",
-    "/logo.png",
-    "/logo.png",
+    "/testimonials/olivier.jpg",
+    "/testimonials/siebe-baree.jpg",
+    "/testimonials/olivier.jpg",
+    "/testimonials/olivier.jpg",
+    "/testimonials/olivier.jpg",
 ];
 
-export default function Hero() {
+export default async function Hero() {
+    const totalOrders = await db
+        .select()
+        .from(orders)
+        .then((orders) => orders.length);
+
     return (
         <div className="relative z-10 my-10 flex w-full flex-grow flex-col items-center justify-center gap-12 xl:my-0 xl:flex-row xl:justify-between xl:gap-0">
             <div className="z-10 xl:flex-grow">
@@ -106,7 +113,8 @@ export default function Hero() {
                             ))}
                         </div>
                         <p className="text-sm">
-                            <b>8</b> people are improving their lives
+                            <b>{totalOrders}</b> people are improving their
+                            lives
                         </p>
                     </div>
                 </div>
