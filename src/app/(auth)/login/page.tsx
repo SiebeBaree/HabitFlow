@@ -16,7 +16,7 @@ import { type z } from "zod";
 import { loginSchema } from "./schema";
 import { FormError } from "@/components/form-error";
 import { login } from "./actions";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import Link from "next/link";
 import LoginSocial from "@/components/auth/login-social";
 import { useSearchParams } from "next/navigation";
@@ -35,11 +35,6 @@ export default function LoginPage() {
 
     const callbackUrl = searchParams.get("callbackUrl");
     const urlError = searchParams.get("error");
-    if (urlError) {
-        if (knownErrorsKeys.includes(urlError)) {
-            setError(knownErrors[urlError as keyof typeof knownErrors]);
-        }
-    }
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -65,6 +60,12 @@ export default function LoginPage() {
             }
         });
     }
+
+    useEffect(() => {
+        if (urlError && knownErrorsKeys.includes(urlError)) {
+            setError(knownErrors[urlError as keyof typeof knownErrors]);
+        }
+    }, [urlError]);
 
     return (
         <>
