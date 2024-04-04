@@ -1,5 +1,6 @@
 import Hero from "@/components/home/hero";
 import FeaturedOn from "@/components/home/featured-on";
+import WhyHabitFlow from "@/components/home/why-habitflow";
 import Testimonials from "@/components/home/testimonials";
 import Pricing from "@/components/home/pricing";
 import FrequentlyAskedQuestions from "@/components/home/faq";
@@ -18,6 +19,7 @@ export default function HomePage() {
                 <FeaturedOn />
             </div>
 
+            <WhyHabitFlow />
             <Testimonials />
             <Pricing />
             <FrequentlyAskedQuestions />
