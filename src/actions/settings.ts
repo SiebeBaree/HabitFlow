@@ -5,7 +5,7 @@ import { auth } from "@/server/auth";
 import { createRateLimit } from "@/server/data/ratelimit";
 import { headers } from "next/headers";
 import type { z } from "zod";
-import bcrypt from "bcryptjs";
+import { hash, compare } from "bcrypt-ts";
 import { db } from "@/server/db";
 import { userSettings, users } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
@@ -76,7 +76,7 @@ export async function updateAccount(
                 validatedData.data.newPassword &&
                 existingUser.password
             ) {
-                const passwordsMatch = await bcrypt.compare(
+                const passwordsMatch = await compare(
                     validatedData.data.oldPassword,
                     existingUser.password,
                 );
@@ -88,7 +88,7 @@ export async function updateAccount(
                     };
                 }
 
-                const hashedPassword = await bcrypt.hash(
+                const hashedPassword = await hash(
                     validatedData.data.newPassword,
                     10,
                 );

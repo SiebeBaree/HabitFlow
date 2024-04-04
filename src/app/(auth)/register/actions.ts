@@ -5,7 +5,7 @@ import { registerSchema } from "./schema";
 import { db } from "@/server/db";
 import { premium, users } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
-import bcrypt from "bcryptjs";
+import { hash } from "bcrypt-ts";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/server/mail";
 import { headers } from "next/headers";
@@ -39,7 +39,7 @@ export async function register(values: z.infer<typeof registerSchema>) {
     }
 
     const { name, email, password } = validatedFields.data;
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await hash(password, 10);
 
     const existingUser: { email: string }[] = await db
         .select({
