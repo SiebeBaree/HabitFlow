@@ -1,15 +1,35 @@
 import "@/styles/globals.css";
 
-import { Gabarito } from "next/font/google";
+import localFont from "next/font/local";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
 import type { Metadata, Viewport } from "next";
 import { env } from "@/env";
 import Providers from "@/components/providers";
 
-const gabarito = Gabarito({
-    subsets: ["latin"],
-    weight: ["400", "500", "600", "700"],
+const gabarito = localFont({
+    src: [
+        {
+            path: "../fonts/Gabarito-Regular.ttf",
+            weight: "400",
+            style: "normal",
+        },
+        {
+            path: "../fonts/Gabarito-Medium.ttf",
+            weight: "500",
+            style: "normal",
+        },
+        {
+            path: "../fonts/Gabarito-SemiBold.ttf",
+            weight: "600",
+            style: "normal",
+        },
+        {
+            path: "../fonts/Gabarito-Bold.ttf",
+            weight: "700",
+            style: "normal",
+        },
+    ],
 });
 
 export const metadata: Metadata = {

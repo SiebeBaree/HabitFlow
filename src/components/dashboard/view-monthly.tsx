@@ -127,9 +127,7 @@ export default function ViewMonthly({ userId }: { userId: string }) {
                             isToday(i) && "bg-primary text-primary-foreground",
                         )}
                     >
-                        <p className="mb-1 text-xs font-light">
-                            {getDayOfWeek(i)}
-                        </p>
+                        <p className="mb-1 text-xs">{getDayOfWeek(i)}</p>
                         <p>{i + 1}</p>
                     </div>
                 ),
