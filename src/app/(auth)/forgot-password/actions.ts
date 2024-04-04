@@ -7,6 +7,9 @@ import { sendPasswordResetEmail } from "@/server/mail";
 import { generatePasswordResetToken } from "@/lib/tokens";
 import { headers } from "next/headers";
 import { createRateLimit } from "@/server/data/ratelimit";
+import { db } from "@/server/db";
+import { accounts } from "@/server/db/schema";
+import { eq } from "drizzle-orm";
 
 const ratelimit = createRateLimit(2, "45m");
 
@@ -27,6 +30,21 @@ export async function forgot(values: z.infer<typeof forgotPasswordSchema>) {
             success: false,
             error: "Email not found",
         };
+    }
+
+    const credentialsUser = await db
+        .select()
+        .from(accounts)
+        .where(eq(accounts.userId, existingUser.id))
+        .limit(1);
+
+    if (credentialsUser.length > 0) {
+        if (credentialsUser[0]!.provider !== "credentials") {
+            return {
+                success: false,
+                error: "You signed up with a social provider",
+            };
+        }
     }
 
     const ip = headers().get("x-forwarded-for") ?? headers().get("x-real-ip");
