@@ -10,7 +10,7 @@ export default function AuthLayout({
         <div className="relative flex min-h-screen w-full items-center justify-center lg:grid lg:grid-cols-2 lg:items-stretch lg:justify-normal">
             <Link
                 href={"/"}
-                className="absolute left-4 top-4 hidden text-2xl font-bold lg:block"
+                className="absolute left-4 top-4 hidden text-2xl font-bold text-primary lg:block"
             >
                 HabitFlow
             </Link>

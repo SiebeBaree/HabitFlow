@@ -25,14 +25,16 @@ export default async function Navbar() {
         <nav className="container flex h-20 items-center justify-between py-4">
             <div className="flex items-center gap-4 xl:gap-10">
                 <div>
-                    <h1 className="text-2xl font-bold">HabitFlow</h1>
+                    <h1 className="text-2xl font-bold text-primary">
+                        HabitFlow
+                    </h1>
                 </div>
                 <ul className="hidden items-center gap-2 sm:flex">
                     <li>
-                        <NavItem name="Pricing" href="#pricing" />
+                        <NavItem name="Pricing" href="/#pricing" />
                     </li>
                     <li>
-                        <NavItem name="FAQ" href="#faq" />
+                        <NavItem name="FAQ" href="/#faq" />
                     </li>
                 </ul>
             </div>
