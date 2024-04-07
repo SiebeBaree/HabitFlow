@@ -3,6 +3,8 @@ import type { LucideIcon } from "lucide-react";
 export type MonthlyViewData = {
     habitId: number;
     habitName: string;
+    goal?: number;
+    achieved?: number;
     [key: `day-${number}`]: number | undefined;
 };
 
@@ -30,10 +32,15 @@ export type Role = "user" | "admin";
 export type Product = {
     name: string;
     price: {
-        was: number;
+        was?: number;
         now: number;
     };
-    features: string[];
+    features: {
+        name: string;
+        isAvailable?: boolean;
+        isComing?: boolean;
+    }[];
     planId: string;
     variantId: string;
+    caption?: string;
 };

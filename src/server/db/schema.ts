@@ -148,6 +148,8 @@ export const habits = createTable("habit", {
         .references(() => users.id),
     sortOrder: integer("sort_order").notNull().default(0),
     createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+    archived: boolean("archived").notNull().default(false),
+    goal: integer("goal"),
 });
 
 export const habitRelations = relations(habits, ({ one }) => ({
