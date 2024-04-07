@@ -22,24 +22,6 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
-export function getDaysInMonth(date: Date): number {
-    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-}
-
-export function getFirstDayOfMonth(date: Date): Date {
-    return new Date(date.getFullYear(), date.getMonth(), 1);
-}
-
-export function getLastDayOfMonth(date: Date): Date {
-    return new Date(date.getFullYear(), date.getMonth() + 1, 0);
-}
-
-export function daysBetween(date: Date): number {
-    const now = new Date();
-    const difference = now.getTime() - date.getTime();
-    return Math.floor(difference / (1000 * 60 * 60 * 24));
-}
-
 export function getDashboardRoutes(): Route[] {
     return [
         {
