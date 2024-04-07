@@ -11,7 +11,7 @@ export const passwordSchema = z
     });
 
 export const createHabitSchema = z.object({
-    name: z
+    habitName: z
         .string()
         .min(1, {
             message: "Habit name must be at least 1 character long.",
@@ -38,4 +38,25 @@ export const settingsNotificationsSchema = z.object({
     habitReminders: z.boolean(),
     updateEmails: z.boolean(),
     marketingEmails: z.boolean(),
+});
+
+export const updateHabitSchema = z.object({
+    habitName: z
+        .string()
+        .min(1, {
+            message: "Habit name must be at least 1 character long.",
+        })
+        .max(128, {
+            message: "Habit name must be at most 128 characters long.",
+        }),
+    goal: z
+        .number()
+        .int()
+        .gte(0, {
+            message: "Goal must be a positive number.",
+        })
+        .lte(31, {
+            message: "Goal must be less than or equal to 31.",
+        })
+        .optional(),
 });

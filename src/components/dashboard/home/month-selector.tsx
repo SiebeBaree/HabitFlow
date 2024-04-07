@@ -1,6 +1,7 @@
 "use client";
 
-import { cn, daysBetween, getLastDayOfMonth } from "@/lib/utils";
+import { daysBetween, getLastDayOfMonth } from "@/lib/date";
+import { cn } from "@/lib/utils";
 import type { Premium } from "@/server/db/schema";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useState } from "react";

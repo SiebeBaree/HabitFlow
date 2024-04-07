@@ -36,12 +36,12 @@ export default function CreateHabitForm() {
         "You cannot create more habits",
     );
     const [isPending, startTransition] = useTransition();
-    const habitStore = useHabitStore();
+    const addHabit = useHabitStore((state) => state.addHabit);
 
     const form = useForm<z.infer<typeof createHabitSchema>>({
         resolver: zodResolver(createHabitSchema),
         defaultValues: {
-            name: "",
+            habitName: "",
         },
     });
 
@@ -58,9 +58,12 @@ export default function CreateHabitForm() {
                     }
                 }
 
-                if (data.success) {
+                if (data.success && data.habitId && data.habitName) {
                     toast.success("Habit created");
-                    habitStore.addHabit(values.name);
+                    addHabit({
+                        name: data.habitName,
+                        id: data.habitId,
+                    });
                     form.reset();
                 } else {
                     toast.error(
@@ -96,7 +99,7 @@ export default function CreateHabitForm() {
                 >
                     <FormField
                         control={form.control}
-                        name="name"
+                        name="habitName"
                         render={({ field }) => (
                             <FormItem className="w-56">
                                 <FormControl>

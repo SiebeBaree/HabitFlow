@@ -1,5 +1,5 @@
-import CreateHabitForm from "@/components/dashboard/create-habit-form";
-import ViewMonthly from "@/components/dashboard/view-monthly";
+import CreateHabitForm from "@/components/dashboard/home/create-habit-form";
+import ViewMonthly from "@/components/dashboard/home/view-monthly";
 import { auth } from "@/server/auth";
 import { getPremiumByUserId } from "@/server/data/user";
 

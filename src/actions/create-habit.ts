@@ -66,17 +66,29 @@ export async function createHabit(values: z.infer<typeof createHabitSchema>) {
         };
     }
 
-    await db.insert(habits).values({
-        name: validatedData.data.name,
-        userId: session.user.id,
-        createdAt: new Date(),
-        sortOrder: 0,
-    });
+    const habitIds = await db
+        .insert(habits)
+        .values({
+            name: validatedData.data.habitName,
+            userId: session.user.id,
+            createdAt: new Date(),
+            sortOrder: 0,
+        })
+        .returning({ id: habits.id });
+
+    if (habitIds.length === 0) {
+        return {
+            success: false,
+            error: "Failed to create habit",
+        };
+    }
 
     revalidatePath("/app");
     const showModal = premium.role === "free" && habitCount + 1 === 3;
     return {
         success: true,
+        habitName: validatedData.data.habitName,
+        habitId: habitIds[0]!.id,
         showModal: showModal,
         modalTitle: showModal
             ? "You have reached the limit for free accounts"

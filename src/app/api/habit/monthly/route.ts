@@ -1,8 +1,4 @@
-import {
-    daysBetween,
-    getFirstDayOfMonth,
-    getLastDayOfMonth,
-} from "@/lib/utils";
+import { daysBetween, getFirstDayOfMonth, getLastDayOfMonth } from "@/lib/date";
 import { auth } from "@/server/auth";
 import { getPremiumByUserId } from "@/server/data/user";
 import { db } from "@/server/db";
@@ -70,6 +66,10 @@ export async function GET(request: NextRequest) {
         const row: MonthlyViewData = {
             habitId: habit.id,
             habitName: habit.name,
+            goal: habit.goal ?? undefined,
+            achieved: habitDailyTracking.filter(
+                (join) => join.daily_tracking.completed === 100,
+            ).length,
         };
 
         habitDailyTracking.forEach((join) => {
