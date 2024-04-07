@@ -33,56 +33,10 @@ export default async function Pricing() {
         <SectionWrapper>
             <PageTitle title="Commit to your habits" id="pricing">
                 <Badge className="mt-3 text-sm">
-                    ✨ Launch Discount - 35% OFF ✨
+                    ✨ Launch Discount - 40% OFF ✨
                 </Badge>
             </PageTitle>
             <div className="flex flex-wrap justify-center gap-6 md:gap-4 lg:flex-nowrap xl:gap-8">
-                <Card className="flex w-[400px] flex-col px-4 pt-4">
-                    <p className="absolute text-2xl font-semibold">Trial</p>
-                    <CardHeader className="mb-4 mt-10 flex flex-row items-baseline justify-center gap-2">
-                        <div className="w-12" />
-                        <p className="text-5xl font-bold">$0</p>
-                        <p className="w-12 text-sm font-medium text-black/40">
-                            USD
-                        </p>
-                    </CardHeader>
-                    <CardContent className="p-0">
-                        <ul className="space-y-4">
-                            <li className="flex items-center gap-3">
-                                <CheckIcon size={20} className="text-primary" />
-                                Create up to 3 habits
-                            </li>
-                            <li className="flex items-center gap-3">
-                                <XIcon size={20} className="text-destructive" />
-                                No monthly goals
-                            </li>
-                            <li className="flex items-center gap-3">
-                                <XIcon size={20} className="text-destructive" />
-                                Only see habits for the current month
-                            </li>
-                            <li className="flex items-center gap-3">
-                                <XIcon size={20} className="text-destructive" />
-                                No analytics
-                            </li>
-                        </ul>
-                    </CardContent>
-                    <CardFooter className="mt-12 flex flex-grow flex-col justify-end p-0 pb-2">
-                        {isLoggedIn && alreadySubscribed ? (
-                            <p className="text-center text-green-700">
-                                You are already subscribed!
-                            </p>
-                        ) : (
-                            <Link href="/login">
-                                <Button className="w-[200px]">
-                                    Start now!
-                                </Button>
-                            </Link>
-                        )}
-                        <p className="mt-2 text-sm text-black/70">
-                            No credit card required.
-                        </p>
-                    </CardFooter>
-                </Card>
                 {tiers.map((tier) => (
                     <PricingCard
                         key={tier.planId}
@@ -122,9 +76,13 @@ function PricingCard({
             )}
             <p className="absolute text-2xl font-semibold">{tier.name}</p>
             <CardHeader className="mb-4 mt-10 flex flex-row items-baseline justify-center gap-2">
-                <p className="w-12 text-right text-2xl font-medium text-black/60 line-through">
-                    ${tier.price.was}
-                </p>
+                {tier.price.was ? (
+                    <p className="w-12 text-right text-2xl font-medium text-black/60 line-through">
+                        ${tier.price.was}
+                    </p>
+                ) : (
+                    <div className="w-12" />
+                )}
                 <p className="text-5xl font-bold">${tier.price.now}</p>
                 <p className="w-12 text-sm font-medium text-black/40">USD</p>
             </CardHeader>
@@ -135,8 +93,15 @@ function PricingCard({
                             key={`${tier.planId}.${index}`}
                             className="flex items-center gap-3"
                         >
-                            <CheckIcon size={20} className="text-primary" />
-                            {feature}
+                            {feature.isAvailable === false ? (
+                                <XIcon size={20} className="text-destructive" />
+                            ) : (
+                                <CheckIcon size={20} className="text-primary" />
+                            )}
+                            {feature.name}
+                            {feature.isComing && (
+                                <Badge className="text-xs">Soon</Badge>
+                            )}
                         </li>
                     ))}
                 </ul>
@@ -144,9 +109,13 @@ function PricingCard({
             <CardFooter className="mt-12 flex flex-grow flex-col justify-end p-0 pb-2">
                 {isLoggedIn ? (
                     alreadySubscribed ? (
-                        <p className="text-center text-green-700">
+                        <p className="text-center font-medium text-primary">
                             You are already subscribed!
                         </p>
+                    ) : tier.price.now === 0 ? (
+                        <Link href={`/login`}>
+                            <Button className="w-[200px]">Start now!</Button>
+                        </Link>
                     ) : (
                         <CheckoutButton
                             variantId={parseInt(tier.variantId, 10)}
@@ -154,13 +123,13 @@ function PricingCard({
                     )
                 ) : (
                     <Link
-                        href={`/login?callbackUrl=${encodeURIComponent("/#pricing")}`}
+                        href={`/login${tier.price.now === 0 ? "" : `?callbackUrl=${encodeURIComponent("/#pricing")}`}`}
                     >
                         <Button className="w-[200px]">Start now!</Button>
                     </Link>
                 )}
-                <p className="mt-2 text-sm text-black/70">
-                    Pay once. Use forever.
+                <p className="mt-2 text-sm text-muted-foreground">
+                    {tier.caption ?? "Pay once. Use forever."}
                 </p>
             </CardFooter>
         </Card>
