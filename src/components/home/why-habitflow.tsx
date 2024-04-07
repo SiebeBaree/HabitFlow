@@ -11,7 +11,7 @@ export default function WhyHabitFlow() {
                 <div className="w-full max-w-[500px]">
                     <AboutCard
                         text="NOT using HabitFlow"
-                        className="bg-[#F43F4B] text-center text-xl font-semibold text-background"
+                        className="bg-[#f00e29] text-center text-xl font-semibold text-background"
                     />
                     <AboutCard text="You get motivated and start a couple of new habits" />
                     <AboutCard text="You lose motivation and skip some days" />
@@ -23,7 +23,7 @@ export default function WhyHabitFlow() {
                 <div className="w-full max-w-[500px]">
                     <AboutCard
                         text="Using HabitFlow"
-                        className="bg-[#2ECA73] text-center text-xl font-semibold text-background"
+                        className="bg-[#2dc653] text-center text-xl font-semibold text-background"
                     />
                     <AboutCard text="You get motivated and write your habits down in HabitFlow" />
                     <AboutCard text="You lose motivation and skip some days" />
