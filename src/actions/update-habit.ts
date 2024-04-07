@@ -8,7 +8,7 @@ import { sql } from "drizzle-orm";
 import { headers } from "next/headers";
 import { z } from "zod";
 
-const ratelimit = createRateLimit(10, "30s");
+const ratelimit = createRateLimit(10, "20s");
 
 const updateHabitSchema = z.object({
     habitId: z.number().min(1, {
