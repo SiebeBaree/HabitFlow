@@ -5,7 +5,6 @@ import products from "@/lib/data/products.json";
 import {
     LayoutDashboardIcon,
     HomeIcon,
-    LineChartIcon,
     SettingsIcon,
     CreditCardIcon,
 } from "lucide-react";
@@ -28,12 +27,6 @@ export function getDashboardRoutes(): Route[] {
             label: "Habit Tracker",
             icon: LayoutDashboardIcon,
             href: "/app",
-        },
-        {
-            label: "Analytics",
-            icon: LineChartIcon,
-            href: "/app/analytics",
-            isPremium: true,
         },
         {
             label: "Billing",

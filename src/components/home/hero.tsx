@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { db } from "@/server/db";
 import { orders } from "@/server/db/schema";
+import Link from "next/link";
 
 const persons = [
     "/testimonials/olivier.jpg",
@@ -37,7 +38,7 @@ export default async function Hero() {
                                 viewBox="0 0 271 12"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
-                                className="absolute -bottom-2"
+                                className="absolute -bottom-2 hidden sm:block"
                             >
                                 <path
                                     d="M3 3C9.06854 3.8125 31.0743 8.19464 43.0124 8.35714C54.9505 8.51964 67.5861 4.10393 81.7129 4.07143C95.8396 4.03893 121.034 8.17536 136.156 8.14286C151.278 8.11036 161.419 3.72714 181.416 3.85714C201.412 3.98714 254.868 8.22 268 9"
@@ -50,10 +51,11 @@ export default async function Hero() {
                     </h1>
                 </div>
 
-                <p className="mx-auto mb-4 mt-6 max-w-[600px] text-center xl:mx-0 xl:max-w-full xl:text-left">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Tellus elementum sagittis vitae et leo duis ut diam.
+                <p className="mx-auto mb-4 mt-6 max-w-[600px] text-center xl:mx-0 xl:max-w-[1200px] xl:text-left">
+                    HabitFlow helps you stick to your habits and improve your
+                    life today. We&apos;ve digitalized the proven Habit Tracker
+                    from Atomic Habits. Get statistics on your habits and regain
+                    motivation and finally stick to your habits.
                 </p>
 
                 <div className="my-10 flex flex-col items-center justify-center xl:my-0 xl:items-start xl:justify-normal">
@@ -80,7 +82,11 @@ export default async function Hero() {
                 </div>
 
                 <div className="flex justify-center xl:justify-normal">
-                    <Button className="mb-8 px-8 xl:mt-6">Improve now!</Button>
+                    <Link href={"#pricing"}>
+                        <Button className="mb-8 px-8 xl:mt-6">
+                            Improve now!
+                        </Button>
+                    </Link>
                 </div>
 
                 <div className="flex flex-col items-center justify-center gap-4 sm:flex-row xl:justify-normal">

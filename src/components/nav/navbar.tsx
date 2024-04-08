@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
     LayoutDashboardIcon,
-    LineChartIcon,
     LogOutIcon,
     SettingsIcon,
     type LucideIcon,
@@ -52,11 +51,6 @@ export default async function Navbar() {
                             name="Dashboard"
                             href="/app"
                             Icon={LayoutDashboardIcon}
-                        />
-                        <DropdownItem
-                            name="Analytics"
-                            href="/app/analytics"
-                            Icon={LineChartIcon}
                         />
                         <DropdownItem
                             name="Settings"
