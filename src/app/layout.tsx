@@ -6,9 +6,7 @@ import { Toaster } from "sonner";
 import type { Metadata, Viewport } from "next";
 import { env } from "@/env";
 import Providers from "@/components/providers";
-import Script from "next/script";
 import PlausibleProvider from "next-plausible";
-import Head from "next/head";
 
 const gabarito = localFont({
     src: [
@@ -119,14 +117,9 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <Script
-                defer
-                data-domain="habitflow.pro"
-                src="https://plausible.siebebaree.com/js/script.js"
-            />
-            <Head>
+            <head>
                 <PlausibleProvider domain="habitflow.pro" />
-            </Head>
+            </head>
             <body
                 className={cn(
                     "min-h-screen bg-background font-sans antialiased",
