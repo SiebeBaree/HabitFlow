@@ -1,5 +1,6 @@
 await import("./src/env.js");
 import withPWAInit from "@ducanh2912/next-pwa";
+import { withPlausibleProxy } from "next-plausible";
 
 const withPWA = withPWAInit({
     dest: "public",
@@ -30,6 +31,18 @@ const config = {
             },
         ],
     },
+    async rewrites() {
+        return [
+            {
+                source: "/js/script.js",
+                destination: "https://plausible.siebebaree.com/js/script.js",
+            },
+            {
+                source: "/api/event",
+                destination: "https://plausible.siebebaree.com/api/event",
+            },
+        ];
+    },
 };
 
-export default withPWA(config);
+export default withPWA(withPlausibleProxy()(config));
