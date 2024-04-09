@@ -1,4 +1,5 @@
 import CreateHabitForm from "@/components/dashboard/home/create-habit-form";
+import Feedback from "@/components/dashboard/home/feedback";
 import ViewMonthly from "@/components/dashboard/home/view-monthly";
 import { auth } from "@/server/auth";
 import { getPremiumByUserId } from "@/server/data/user";
@@ -17,6 +18,7 @@ export default async function AppPage() {
             <div className="mt-4">
                 <CreateHabitForm />
             </div>
+            <Feedback />
         </main>
     );
 }
