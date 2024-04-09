@@ -13,7 +13,7 @@ export default function FeaturedOn() {
             <p className="text-foreground/50 md:hidden">Featured on:</p>
 
             <div className="my-8 flex flex-grow flex-wrap items-center justify-center gap-6 md:gap-6 lg:gap-10">
-                <p className="hidden text-foreground/50 md:block">
+                <p className="hidden text-foreground/70 md:block">
                     Featured on:
                 </p>
 

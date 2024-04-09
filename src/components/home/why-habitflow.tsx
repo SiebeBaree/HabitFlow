@@ -27,7 +27,7 @@ export default function WhyHabitFlow() {
                     />
                     <AboutCard text="You get motivated and write your habits down in HabitFlow" />
                     <AboutCard text="You lose motivation and skip some days" />
-                    <AboutCard text="You check your analytics and regain motivation!" />
+                    <AboutCard text="You check your progress and regain motivation!" />
                     <AboutCard
                         text="A couple of weeks later and a new habit is formed! 🎉"
                         isLast={true}

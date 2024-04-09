@@ -26,7 +26,10 @@ export default function Footer() {
                     </p>
 
                     <div className="mt-4 flex items-center gap-4">
-                        <Link href="mailto:siebe.baree@outlook.com">
+                        <Link
+                            href="mailto:siebe.baree@outlook.com"
+                            aria-label="Send an email to me"
+                        >
                             <MailIcon size={16} />
                         </Link>
 
