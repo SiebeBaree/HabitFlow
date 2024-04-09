@@ -67,12 +67,12 @@ export async function hasWebhook() {
 
     // Check if a webhook exists on Lemon Squeezy.
     const allWebhooks = await listWebhooks({
-        filter: { storeId: env.LEMONSQUEEZY_STORE_ID },
+        filter: { storeId: parseInt(env.LEMONSQUEEZY_STORE_ID, 10) },
     });
 
     const webhookUrl = env.WEBHOOK_URL + "api/webhook";
     const webhook = allWebhooks.data?.data.find(
-        (wh) => wh.attributes.url === webhookUrl && wh.attributes.test_mode,
+        (wh) => wh.attributes.url === webhookUrl,
     );
 
     return webhook;
