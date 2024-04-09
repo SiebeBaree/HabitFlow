@@ -4,7 +4,7 @@ import type { z } from "zod";
 import { resetPasswordSchema } from "./schema";
 import { getPasswordResetTokenByToken } from "@/server/data/password-reset-token";
 import { getUserByEmail } from "@/server/data/user";
-import bcrypt from "bcryptjs";
+import { hash } from "bcrypt-ts";
 import { db } from "@/server/db";
 import { passwordResetToken, users } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
@@ -53,7 +53,7 @@ export async function reset(
         };
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await hash(password, 10);
 
     await db
         .update(users)

@@ -6,32 +6,34 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-    ChevronDown,
-    CreditCardIcon,
     LayoutDashboardIcon,
     LogOutIcon,
+    SettingsIcon,
     type LucideIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { auth } from "@/server/auth";
 import { logout } from "@/actions/logout";
+import NavItem from "@/components/nav/nav-item";
+import UserDropdown from "@/components/nav/user-dropdown";
 
 export default async function Navbar() {
     const session = await auth();
 
     return (
         <nav className="container flex h-20 items-center justify-between py-4">
-            <div className="flex items-center gap-10 xl:gap-16">
-                <div>
-                    <h1 className="text-2xl font-bold">HabitFlow</h1>
-                </div>
-                <ul className="flex items-center gap-8">
+            <div className="flex items-center gap-4 xl:gap-10">
+                <Link href="/">
+                    <h1 className="text-2xl font-bold text-primary">
+                        HabitFlow
+                    </h1>
+                </Link>
+                <ul className="hidden items-center gap-2 sm:flex">
                     <li>
-                        <Link href="#pricing">Pricing</Link>
+                        <NavItem name="Pricing" href="/#pricing" />
                     </li>
                     <li>
-                        <Link href="#faq">FAQ</Link>
+                        <NavItem name="FAQ" href="/#faq" />
                     </li>
                 </ul>
             </div>
@@ -39,18 +41,10 @@ export default async function Navbar() {
             {session ? (
                 <DropdownMenu>
                     <DropdownMenuTrigger className="group outline-none">
-                        <div className="border-highlight flex select-none items-center gap-2 rounded-md bg-secondary px-3 py-2">
-                            <Avatar className="h-7 w-7">
-                                <AvatarImage
-                                    src={
-                                        "https://cdn.discordapp.com/embed/avatars/1.png"
-                                    }
-                                />
-                                <AvatarFallback>S</AvatarFallback>
-                            </Avatar>
-                            <p className="font-medium">Siebe</p>
-                            <ChevronDown className="h-4 w-4 text-muted transition-all duration-300 ease-in-out group-data-[state=open]:rotate-180" />
-                        </div>
+                        <UserDropdown
+                            image={session.user.image}
+                            name={session.user.name ?? "User"}
+                        />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="mr-4 w-48">
                         <DropdownItem
@@ -59,14 +53,14 @@ export default async function Navbar() {
                             Icon={LayoutDashboardIcon}
                         />
                         <DropdownItem
-                            name="Billing"
-                            href="/billing"
-                            Icon={CreditCardIcon}
+                            name="Settings"
+                            href="/app/settings"
+                            Icon={SettingsIcon}
                         />
                         <DropdownMenuSeparator />
                         <form action={logout}>
-                            <button type="submit">
-                                <DropdownMenuItem className="cursor-pointer text-red-500 transition-all duration-200 ease-in-out hover:bg-white/10">
+                            <button type="submit" className="w-full">
+                                <DropdownMenuItem className="cursor-pointer text-red-500 transition-all duration-200 ease-in-out hover:bg-black/10">
                                     <LogOutIcon className="mr-2 h-4 w-4" />
                                     <span className="font-medium">Log out</span>
                                 </DropdownMenuItem>
@@ -75,7 +69,7 @@ export default async function Navbar() {
                     </DropdownMenuContent>
                 </DropdownMenu>
             ) : (
-                <Link href="/login">Login</Link>
+                <NavItem name="Login" href="/login" />
             )}
         </nav>
     );
@@ -96,7 +90,7 @@ function DropdownItem({
         <Link href={href ?? "#"}>
             <DropdownMenuItem
                 disabled={disabled}
-                className="cursor-pointer transition-all duration-200 ease-in-out hover:bg-white/10"
+                className="cursor-pointer transition-all duration-200 ease-in-out hover:bg-primary/10"
             >
                 {Icon && <Icon className="mr-2 h-4 w-4" />}
                 <span>{name}</span>

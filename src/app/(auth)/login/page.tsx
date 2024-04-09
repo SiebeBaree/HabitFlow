@@ -16,7 +16,7 @@ import { type z } from "zod";
 import { loginSchema } from "./schema";
 import { FormError } from "@/components/form-error";
 import { login } from "./actions";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import Link from "next/link";
 import LoginSocial from "@/components/auth/login-social";
 import { useSearchParams } from "next/navigation";
@@ -35,11 +35,6 @@ export default function LoginPage() {
 
     const callbackUrl = searchParams.get("callbackUrl");
     const urlError = searchParams.get("error");
-    if (urlError) {
-        if (knownErrorsKeys.includes(urlError)) {
-            setError(knownErrors[urlError as keyof typeof knownErrors]);
-        }
-    }
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -66,11 +61,17 @@ export default function LoginPage() {
         });
     }
 
+    useEffect(() => {
+        if (urlError && knownErrorsKeys.includes(urlError)) {
+            setError(knownErrors[urlError as keyof typeof knownErrors]);
+        }
+    }, [urlError]);
+
     return (
         <>
             <div className="grid gap-2 text-center">
                 <h1 className="text-3xl font-bold">Welcome back</h1>
-                <p className="text-balance text-muted-foreground">
+                <p className="text-balance text-foreground/60">
                     Enter your email below to login to your account
                 </p>
             </div>
@@ -102,11 +103,11 @@ export default function LoginPage() {
                             name="password"
                             render={({ field }) => (
                                 <FormItem>
-                                    <div className="flex items-center">
+                                    <div className="flex items-baseline">
                                         <FormLabel>Password</FormLabel>
                                         <Link
                                             href="/forgot-password"
-                                            className="ml-auto inline-block text-sm underline"
+                                            className="ml-auto inline-block text-xs underline"
                                         >
                                             Forgot your password?
                                         </Link>

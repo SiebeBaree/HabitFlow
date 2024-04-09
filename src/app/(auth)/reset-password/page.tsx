@@ -57,7 +57,7 @@ export default function ResetPasswordPage() {
         <>
             <div className="grid gap-2 text-center">
                 <h1 className="text-3xl font-bold">Reset password</h1>
-                <p className="text-balance text-muted-foreground">
+                <p className="text-balance text-foreground/60">
                     Enter your new password below
                 </p>
             </div>

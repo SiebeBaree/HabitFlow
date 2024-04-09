@@ -2,10 +2,6 @@ import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
 export const env = createEnv({
-    /**
-     * Specify your server-side environment variables schema here. This way you can ensure the app
-     * isn't built with invalid env vars.
-     */
     server: {
         DATABASE_URL: z
             .string()
@@ -23,21 +19,16 @@ export const env = createEnv({
         AUTH_GOOGLE_ID: z.string(),
         AUTH_GOOGLE_SECRET: z.string(),
         RESEND_API_KEY: z.string(),
+        DOMAIN_PREFIX: z.string().optional().default("https://"),
+        VERCEL_URL: z.string(),
+        REDIS_URL: z.string(),
+        REDIS_TOKEN: z.string(),
+        LEMONSQUEEZY_API_KEY: z.string(),
+        LEMONSQUEEZY_STORE_ID: z.string(),
+        LEMONSQUEEZY_WEBHOOK_SECRET: z.string(),
+        WEBHOOK_URL: z.string(),
     },
-
-    /**
-     * Specify your client-side environment variables schema here. This way you can ensure the app
-     * isn't built with invalid env vars. To expose them to the client, prefix them with
-     * `NEXT_PUBLIC_`.
-     */
-    client: {
-        NEXT_PUBLIC_APP_URL: z.string().url(),
-    },
-
-    /**
-     * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
-     * middlewares) or client-side so we need to destruct manually.
-     */
+    client: {},
     runtimeEnv: {
         DATABASE_URL: process.env.DATABASE_URL,
         NODE_ENV: process.env.NODE_ENV,
@@ -47,16 +38,15 @@ export const env = createEnv({
         AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID,
         AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET,
         RESEND_API_KEY: process.env.RESEND_API_KEY,
-        NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+        DOMAIN_PREFIX: process.env.DOMAIN_PREFIX,
+        VERCEL_URL: process.env.VERCEL_URL,
+        REDIS_URL: process.env.REDIS_URL,
+        REDIS_TOKEN: process.env.REDIS_TOKEN,
+        LEMONSQUEEZY_API_KEY: process.env.LEMONSQUEEZY_API_KEY,
+        LEMONSQUEEZY_STORE_ID: process.env.LEMONSQUEEZY_STORE_ID,
+        LEMONSQUEEZY_WEBHOOK_SECRET: process.env.LEMONSQUEEZY_WEBHOOK_SECRET,
+        WEBHOOK_URL: process.env.WEBHOOK_URL,
     },
-    /**
-     * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
-     * useful for Docker builds.
-     */
     skipValidation: !!process.env.SKIP_ENV_VALIDATION,
-    /**
-     * Makes it so that empty strings are treated as undefined. `SOME_VAR: z.string()` and
-     * `SOME_VAR=''` will throw an error.
-     */
     emptyStringAsUndefined: true,
 });

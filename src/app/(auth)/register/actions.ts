@@ -3,11 +3,15 @@
 import type { z } from "zod";
 import { registerSchema } from "./schema";
 import { db } from "@/server/db";
-import { users } from "@/server/db/schema";
+import { premium, users } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
-import bcrypt from "bcryptjs";
+import { hash } from "bcrypt-ts";
 import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/lib/mail";
+import { sendVerificationEmail } from "@/server/mail";
+import { headers } from "next/headers";
+import { createRateLimit } from "@/server/data/ratelimit";
+
+const ratelimit = createRateLimit(3, "20m");
 
 export async function register(values: z.infer<typeof registerSchema>) {
     const validatedFields = registerSchema.safeParse(values);
@@ -18,8 +22,24 @@ export async function register(values: z.infer<typeof registerSchema>) {
         };
     }
 
+    const ip = headers().get("x-forwarded-for") ?? headers().get("x-real-ip");
+    if (!ip) {
+        return {
+            success: false,
+            error: "Invalid IP",
+        };
+    }
+
+    const { remaining, limit, success } = await ratelimit.limit(ip);
+    if (!success) {
+        return {
+            success: false,
+            error: "You created too many accounts! Please try again later.",
+        };
+    }
+
     const { name, email, password } = validatedFields.data;
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await hash(password, 10);
 
     const existingUser: { email: string }[] = await db
         .select({
@@ -36,10 +56,19 @@ export async function register(values: z.infer<typeof registerSchema>) {
         };
     }
 
-    await db.insert(users).values({
-        name,
-        email,
-        password: hashedPassword,
+    const user = await db
+        .insert(users)
+        .values({
+            name,
+            email,
+            password: hashedPassword,
+        })
+        .returning({
+            id: users.id,
+        });
+
+    await db.insert(premium).values({
+        userId: user[0]!.id,
     });
 
     const verificationToken = await generateVerificationToken(email);
@@ -50,6 +79,8 @@ export async function register(values: z.infer<typeof registerSchema>) {
 
     return {
         success: true,
+        limit: limit,
+        remaining: remaining,
         message: "Confirmation email sent!",
     };
 }

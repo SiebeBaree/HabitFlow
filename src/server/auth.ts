@@ -1,23 +1,33 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import NextAuth, { type DefaultSession } from "next-auth";
 import { db } from "@/server/db";
-import { createTable, users } from "@/server/db/schema";
+import { createTable, premium, users } from "@/server/db/schema";
 import authConfig from "@/server/auth.config";
 import { eq } from "drizzle-orm";
 import { getUserById } from "@/server/data/user";
+import type { Role } from "@/types";
 
 declare module "@auth/core" {
     interface Session extends DefaultSession {
         user: {
             id: string;
-            role: "user" | "admin";
+            role: Role;
+        } & DefaultSession["user"];
+    }
+}
+
+declare module "next-auth" {
+    interface Session extends DefaultSession {
+        user: {
+            id: string;
+            role: Role;
         } & DefaultSession["user"];
     }
 }
 
 declare module "@auth/core/jwt" {
     interface JWT {
-        role?: "user" | "admin";
+        role?: Role;
     }
 }
 
@@ -33,11 +43,15 @@ export const {
         newUser: "/register",
     },
     events: {
-        async linkAccount({ user }) {
+        async linkAccount({ user, account }) {
+            if (account?.provider === "credentials") return;
             await db
                 .update(users)
                 .set({ emailVerified: new Date() })
                 .where(eq(users.id, user.id ?? ""));
+            await db.insert(premium).values({
+                userId: user.id!,
+            });
         },
     },
     callbacks: {

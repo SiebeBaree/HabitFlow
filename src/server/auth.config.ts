@@ -7,8 +7,8 @@ import { env } from "@/env";
 import type { NextAuthConfig } from "next-auth";
 
 import { loginSchema } from "@/app/(auth)/login/schema";
-import { getUserByEmail } from "./data/user";
-import bcrypt from "bcryptjs";
+import { getUserByEmail } from "@/server/data/user";
+import { compare } from "bcrypt-ts";
 
 export default {
     providers: [
@@ -26,10 +26,7 @@ export default {
                     return null;
                 }
 
-                const passwordsMatch = await bcrypt.compare(
-                    password,
-                    user.password,
-                );
+                const passwordsMatch = await compare(password, user.password);
                 if (!passwordsMatch) {
                     return null;
                 }

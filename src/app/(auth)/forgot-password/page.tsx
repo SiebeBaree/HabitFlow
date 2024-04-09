@@ -53,7 +53,7 @@ export default function ForgotPasswordPage() {
         <>
             <div className="grid gap-2 text-center">
                 <h1 className="text-3xl font-bold">Reset password</h1>
-                <p className="text-balance text-muted-foreground">
+                <p className="text-balance text-foreground/60">
                     Forgot your password? No worries, we got you.
                 </p>
             </div>

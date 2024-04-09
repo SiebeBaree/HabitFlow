@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -10,38 +11,40 @@ import { FormSuccess } from "@/components/form-success";
 export default function VerifyEmailPage() {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
-
     const searchParams = useSearchParams();
-    const token = searchParams.get("token");
 
-    const verifyEmail = useCallback(() => {
-        if (success) return;
-        if (error) return;
+    const verifyEmail = useCallback(
+        (token: string | null) => {
+            if (success) return;
+            if (error) return;
 
-        if (!token) {
-            setError("Missing token!");
-            return;
-        }
+            if (!token) {
+                setError("Missing token!");
+                return;
+            }
 
-        newVerification(token)
-            .then((data) => {
-                setError(data.error);
-                setSuccess(data.message);
-            })
-            .catch(() => {
-                setError("Failed to verify email!");
-            });
-    }, [token, success, error]);
+            newVerification(token)
+                .then((data) => {
+                    setError(data.error);
+                    setSuccess(data.message);
+                })
+                .catch(() => {
+                    setError("Failed to verify email!");
+                });
+        },
+        [success, error],
+    );
 
     useEffect(() => {
-        verifyEmail();
-    }, [verifyEmail]);
+        const token = searchParams.get("token");
+        verifyEmail(token);
+    }, [verifyEmail, searchParams]);
 
     return (
         <>
             <div className="grid gap-2 text-center">
                 <h1 className="text-3xl font-bold">Verify email</h1>
-                <p className="text-balance text-muted-foreground">
+                <p className="text-balance text-foreground/60">
                     Confirming your email address.
                 </p>
             </div>

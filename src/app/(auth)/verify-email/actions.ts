@@ -3,11 +3,10 @@
 import { db } from "@/server/db";
 import { getUserByEmail } from "@/server/data/user";
 import { getVerificationTokenByToken } from "@/server/data/verification-token";
-import { users, verificationToken } from "@/server/db/schema";
+import { userSettings, users, verificationToken } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function newVerification(token: string) {
-    console.log("newVerification", token);
     const existingToken = await getVerificationTokenByToken(token);
     if (!existingToken) {
         return { success: false, error: "Token does not exist." };
@@ -31,6 +30,10 @@ export async function newVerification(token: string) {
     await db
         .delete(verificationToken)
         .where(eq(verificationToken.id, existingToken.id));
+
+    await db.insert(userSettings).values({
+        userId: existingUser.id,
+    });
 
     return { success: true, message: "Email verified!" };
 }

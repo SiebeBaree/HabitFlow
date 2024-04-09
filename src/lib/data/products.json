@@ -1,0 +1,84 @@
+[
+    {
+        "name": "Trial",
+        "price": {
+            "now": 0
+        },
+        "features": [
+            {
+                "name": "Create up to 3 habits"
+            },
+            {
+                "name": "No monthly goals",
+                "isAvailable": false
+            },
+            {
+                "name": "Only see habits for the current month",
+                "isAvailable": false
+            },
+            {
+                "name": "No analytics",
+                "isAvailable": false
+            }
+        ],
+        "planId": "0",
+        "variantId": "0",
+        "caption": "No credit card required."
+    },
+    {
+        "name": "Starter",
+        "price": {
+            "was": 12,
+            "now": 7
+        },
+        "features": [
+            {
+                "name": "Create unlimited habits"
+            },
+            {
+                "name": "Set monthly goals"
+            },
+            {
+                "name": "View habits back up to 90 days"
+            },
+            {
+                "name": "Simple analytics",
+                "isComing": true
+            }
+        ],
+        "planId": "239151",
+        "variantId": "328026"
+    },
+    {
+        "name": "Dedicated",
+        "price": {
+            "was": 20,
+            "now": 12
+        },
+        "features": [
+            {
+                "name": "Create unlimited habits"
+            },
+            {
+                "name": "Set monthly goals"
+            },
+            {
+                "name": "View lifetime data"
+            },
+            {
+                "name": "Advanced analytics",
+                "isComing": true
+            },
+            {
+                "name": "Add time spent with habits",
+                "isComing": true
+            },
+            {
+                "name": "Add notes to habits",
+                "isComing": true
+            }
+        ],
+        "planId": "239152",
+        "variantId": "328027"
+    }
+]
