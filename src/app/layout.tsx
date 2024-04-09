@@ -65,7 +65,7 @@ export const metadata: Metadata = {
         address: false,
         telephone: false,
     },
-    metadataBase: new URL(env.DOMAIN_PREFIX + env.VERCEL_URL),
+    metadataBase: new URL(env.APP_URL),
     alternates: {
         canonical: "/",
     },

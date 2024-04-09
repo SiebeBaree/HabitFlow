@@ -14,6 +14,6 @@ export default function robots(): MetadataRoute.Robots {
                 "/auth/error",
             ],
         },
-        sitemap: `${env.DOMAIN_PREFIX}${env.VERCEL_URL}/sitemap.xml`,
+        sitemap: `${env.APP_URL}/sitemap.xml`,
     };
 }

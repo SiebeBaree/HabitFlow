@@ -3,10 +3,10 @@ import { env } from "@/env";
 
 const resend = new Resend(env.RESEND_API_KEY);
 
-const FROM_EMAIL = "mail@habitflow.pro";
+const FROM_EMAIL = "HabitFlow <mail@habitflow.pro>";
 
 export async function sendVerificationEmail(email: string, token: string) {
-    const confirmLink = `${env.DOMAIN_PREFIX}${env.VERCEL_URL}/verify-email?token=${token}`;
+    const confirmLink = `${env.APP_URL}/verify-email?token=${token}`;
 
     await resend.emails.send({
         from: FROM_EMAIL,
@@ -21,7 +21,7 @@ export async function sendVerificationEmail(email: string, token: string) {
 }
 
 export async function sendPasswordResetEmail(email: string, token: string) {
-    const confirmLink = `${env.DOMAIN_PREFIX}${env.VERCEL_URL}/reset-password?token=${token}`;
+    const confirmLink = `${env.APP_URL}/reset-password?token=${token}`;
 
     await resend.emails.send({
         from: FROM_EMAIL,

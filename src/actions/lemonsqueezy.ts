@@ -48,7 +48,7 @@ export async function getCheckoutURL(variantId: number) {
             },
             productOptions: {
                 enabledVariants: [variantId],
-                redirectUrl: `${env.WEBHOOK_URL}/app`,
+                redirectUrl: `${env.APP_URL}/app`,
                 receiptButtonText: "Go to HabitFlow",
                 receiptThankYouNote:
                     "Thank you for buying HabitFlow Premium! 🎉",
@@ -70,13 +70,7 @@ export async function hasWebhook() {
         filter: { storeId: env.LEMONSQUEEZY_STORE_ID },
     });
 
-    // Check if WEBHOOK_URL ends with a slash. If not, add it.
-    let webhookUrl = env.WEBHOOK_URL;
-    if (!webhookUrl.endsWith("/")) {
-        webhookUrl += "/";
-    }
-    webhookUrl += "api/webhook";
-
+    const webhookUrl = env.WEBHOOK_URL + "api/webhook";
     const webhook = allWebhooks.data?.data.find(
         (wh) => wh.attributes.url === webhookUrl && wh.attributes.test_mode,
     );
@@ -87,14 +81,7 @@ export async function hasWebhook() {
 export async function setupWebhook() {
     configureLemonSqueezy();
 
-    // Check if WEBHOOK_URL ends with a slash. If not, add it.
-    let webhookUrl = env.WEBHOOK_URL;
-    if (!webhookUrl.endsWith("/")) {
-        webhookUrl += "/";
-    }
-    webhookUrl += "api/webhook";
-
-    // Do not set a webhook on Lemon Squeezy if it already exists.
+    const webhookUrl = env.WEBHOOK_URL + "api/webhook";
     let webhook = await hasWebhook();
 
     // If the webhook does not exist, create it.
