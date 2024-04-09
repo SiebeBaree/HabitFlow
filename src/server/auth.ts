@@ -1,7 +1,7 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import NextAuth, { type DefaultSession } from "next-auth";
 import { db } from "@/server/db";
-import { createTable, users } from "@/server/db/schema";
+import { createTable, premium, users } from "@/server/db/schema";
 import authConfig from "@/server/auth.config";
 import { eq } from "drizzle-orm";
 import { getUserById } from "@/server/data/user";
@@ -49,6 +49,9 @@ export const {
                 .update(users)
                 .set({ emailVerified: new Date() })
                 .where(eq(users.id, user.id ?? ""));
+            await db.insert(premium).values({
+                userId: user.id!,
+            });
         },
     },
     callbacks: {
