@@ -31,18 +31,10 @@ const config = {
             },
         ],
     },
-    async rewrites() {
-        return [
-            {
-                source: "/js/script.js",
-                destination: "https://plausible.siebebaree.com/js/script.js",
-            },
-            {
-                source: "/api/event",
-                destination: "https://plausible.siebebaree.com/api/event",
-            },
-        ];
-    },
 };
 
-export default withPWA(withPlausibleProxy()(config));
+export default withPWA(
+    withPlausibleProxy({
+        customDomain: "https://plausible.siebebaree.com",
+    })(config),
+);
