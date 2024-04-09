@@ -10,9 +10,9 @@ import Link from "next/link";
 const persons = [
     "/testimonials/olivier.jpg",
     "/testimonials/siebe-baree.jpg",
-    "/testimonials/olivier.jpg",
-    "/testimonials/olivier.jpg",
-    "/testimonials/olivier.jpg",
+    "/testimonials/cedric.jpg",
+    "/testimonials/iris.jpg",
+    "/testimonials/albin.jpg",
 ];
 
 export default async function Hero() {
@@ -139,7 +139,7 @@ export default async function Hero() {
                     )}
                 />
                 <Image
-                    src="/hero.png"
+                    src="/hero.jpg"
                     alt="HabitFlow dashboard"
                     width={800}
                     height={600}

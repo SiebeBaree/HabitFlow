@@ -14,17 +14,17 @@ type Testimonial = {
 const testimonials = [
     {
         text: [
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus elementum sagittis vitae et leo duis ut diam. Lorem ipsum dolor sit amet.",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus elementum.",
+            "Habitflow helps me improve my discipline and creates habits I'm able to maintain. It is an amazing new start to my self-improvement journey!",
+            "This app helps me create a daily routine I can follow and also gives me a lot of motivation when I am able to achieve my goals at the end of the month.",
         ],
         name: "Iris",
-        image: "/logo.png",
+        image: "/testimonials/iris.jpg",
         stars: 5,
     },
     {
         text: [
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus elementum sagittis vitae et leo duis ut diam. Lorem ipsum dolor sit amet.",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus elementum.",
+            "Since I use HabitFlow I can finally stick to my habits! I skip a day or two sometimes but thanks to HabitFlow I don't quit my habits.",
+            "I'm not procrastinating anymore and finally got my sh*t together and started sticking to my habits. This app is awesome and I will continue to use it.",
         ],
         name: "Olivier",
         image: "/testimonials/olivier.jpg",
@@ -32,10 +32,10 @@ const testimonials = [
     },
     {
         text: [
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus elementum sagittis vitae et leo duis ut diam. Lorem ipsum dolor sit amet.",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus elementum.",
+            "After every New Year, I made resolutions to change my habits, but this year is different. For the first time, I am still adhering to certain resolutions in April.",
+            "I owe this success to the remarkable app HabitFlow that completely transformed my perspective on habits.",
         ],
-        name: "John Doe",
+        name: "Cedric",
         image: "/logo.png",
         stars: 5,
     },
@@ -56,8 +56,8 @@ export default function Testimonials() {
 
 function TestimonialCard(testimonial: Testimonial) {
     return (
-        <Card className="max-w-[340px] p-8 md:p-6 lg:p-8">
-            <CardContent className="flex flex-col gap-4 p-0">
+        <Card className="flex max-w-[340px] flex-col p-8 md:p-6 lg:p-8">
+            <CardContent className="flex flex-grow flex-col gap-4 p-0">
                 {testimonial.text.map((text, index) => (
                     <p key={index}>{text}</p>
                 ))}
