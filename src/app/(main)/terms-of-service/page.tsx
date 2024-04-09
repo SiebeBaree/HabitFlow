@@ -152,7 +152,14 @@ export default function TermsOfServicePage() {
             <h4 className="mb-1 mt-5">Contact Information</h4>
             <p>
                 For any questions or concerns about these Terms or our services,
-                please contact me at siebe.baree@outlook.com or on{" "}
+                please contact me at{" "}
+                <Link
+                    href="mailto:siebe.baree@outlook.com"
+                    className="text-primary underline"
+                >
+                    siebe.baree@outlook.com
+                </Link>{" "}
+                or on{" "}
                 <Link
                     href={"https://x.com/BareeSiebe"}
                     target="_blank"
