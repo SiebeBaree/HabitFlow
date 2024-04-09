@@ -36,7 +36,7 @@ const testimonials = [
             "I owe this success to the remarkable app HabitFlow that completely transformed my perspective on habits.",
         ],
         name: "Cedric",
-        image: "/logo.png",
+        image: "/testimonials/cedric.jpg",
         stars: 5,
     },
 ] as Testimonial[];
